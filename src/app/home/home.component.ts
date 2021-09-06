@@ -16,13 +16,12 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     // Check if there is a current user and redirect to the login screen if there isn't
-    this.currentUser = "temp for testing" //localStorage.getItem("currentUser");
+    this.currentUser = localStorage.getItem("currentUser");
     if (!this.currentUser){
       this.router.navigateByUrl("/login");
     }
 
     var data:object = await this.dataService.getData();
-    console.log(data);
   }
 
 }

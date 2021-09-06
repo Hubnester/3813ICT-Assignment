@@ -22,11 +22,12 @@ export class LoginComponent implements OnInit {
   }
 
   loginClicked(){
-    this.httpClient.post(BACKEND_URL + "/api/auth", this.loginDetails, httpOptions)
+    this.httpClient.post(BACKEND_URL + "/auth", this.loginDetails, httpOptions)
       .subscribe((data: any) => {
-        if (data.valid){
-          sessionStorage.setItem("userData", JSON.stringify(data));
+        if (data && data.user){
+          localStorage.setItem("currentUser", data.user);
           this.showError = false;
+          this.router.navigateByUrl("/");
         } else {
           this.showError = true;
         }

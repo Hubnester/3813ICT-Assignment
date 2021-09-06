@@ -11,7 +11,6 @@ export class DataService {
   // Read the data from the file
   async getData(): Promise<object>{
     var data: object = await this.backendService.get("/getData");
-    console.log(data);
     return data;
   }
 }

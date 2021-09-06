@@ -17,7 +17,6 @@ export class BackendService {
     var values: any;
     await this.httpClient.get(BACKEND_URL + path)
       .toPromise().then(data => {
-        console.log(data);
         values = data
       })
     return values;
