@@ -1,1 +1,8 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid" *ngIf="showLogout">
+        <ul class="nav navbar-nav">
+        <li><input type="submit" value="Log Out" (click)="logOut()"></li>
+        </ul>
+    </div>
+</nav>
 <router-outlet></router-outlet>

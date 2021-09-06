@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
   loginClicked(){
     this.httpClient.post(BACKEND_URL + "/auth", this.loginDetails, httpOptions)
       .subscribe((data: any) => {
-        if (data && data.user){
+        if (data.user){
           localStorage.setItem("currentUser", data.user);
           this.showError = false;
           this.router.navigateByUrl("/");

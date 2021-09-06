@@ -11,9 +11,10 @@ module.exports = function(app, path){
             jsonData = JSON.parse(data);
             for(user in jsonData.users){
                 if (req.body.username == user){
-                    res.send({"user": user});
+                    return res.send({"user": user});
                 }
             }
+            res.send({});
         })
     });
 }
