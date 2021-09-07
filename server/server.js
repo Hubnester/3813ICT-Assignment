@@ -22,5 +22,6 @@ let server = http.listen(3000, function(){
 var serverData = JSON.parse(fs.readFileSync("./data.json"));
 
 require("./routes/auth.js")(app, path, serverData);
+require("./routes/getUserRole.js")(app, path, serverData);
 require("./routes/getAuthorisedGroups.js")(app, path, serverData);
 require("./routes/getAuthorisedGroupChannels.js")(app, path, serverData);

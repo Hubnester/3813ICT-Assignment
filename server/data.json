@@ -1,7 +1,8 @@
 {
 	"users" : {
         "super" : {
-            "role" : "superAdmin"
+            "role" : "superAdmin",
+            "email" : "super@com.au"
         }
     },
     "groups" : {

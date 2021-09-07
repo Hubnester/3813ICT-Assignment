@@ -13,6 +13,10 @@ const DOWNARROW = "v";
 
 export class HomeComponent implements OnInit {
   currentUser: any = undefined;
+  // Variables for handling the users role
+  isSuperAdmin: boolean = false;
+  isGroupAdmin: boolean = false;
+  isGroupAssis: boolean = false;
   // Variables for handling groups
   authorisedGroups: any = [];
   showGroups: boolean = false;
@@ -29,6 +33,16 @@ export class HomeComponent implements OnInit {
     this.currentUser = localStorage.getItem("currentUser");
     if (!this.currentUser){
       this.router.navigateByUrl("/login");
+    }
+    var userRole: string = await this.dataService.getUserRole(this.currentUser);
+    // Set the permissions based on the role (the fall through is intentional due to roles inheriting the abilities of the ones below)
+    switch (userRole){
+      case "superAdmin":
+        this.isSuperAdmin = true;
+      case "groupAdmin":
+        this.isGroupAdmin = true;
+      case "groupAssis":
+        this.isGroupAssis = true;
     }
   }
 
