@@ -5,6 +5,8 @@ var http = require("http").Server(app);
 var bodyParser = require("body-parser");
 var path = require("path");
 
+var fs = require("fs");
+
 var cors = require("cors");
 app.use(cors());
 
@@ -17,6 +19,8 @@ let server = http.listen(3000, function(){
 	console.log("Server listening on: " + host + " port: " + port);
 });
 
-require("./routes/auth.js")(app, path);
-require("./routes/getAuthorisedGroups.js")(app, path);
-require("./routes/getAuthorisedGroupChannels.js")(app, path);
+var serverData = JSON.parse(fs.readFileSync("./data.json"));
+
+require("./routes/auth.js")(app, path, serverData);
+require("./routes/getAuthorisedGroups.js")(app, path, serverData);
+require("./routes/getAuthorisedGroupChannels.js")(app, path, serverData);
