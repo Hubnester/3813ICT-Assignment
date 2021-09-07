@@ -8,9 +8,12 @@ export class DataService {
 
   constructor( private backendService: BackendService ) { }
 
-  // Read the data from the file
-  async getData(): Promise<object>{
-    var data: object = await this.backendService.get("/getData");
-    return data;
+  // Get the groups a user is authorised to see
+  async getAuthorisedGroups(currentUser: string): Promise<object>{
+    return await this.backendService.post("/getAuthorisedGroups", {"user" : currentUser});
+  }
+
+  async getAuthorisedGroupChannels(currentUser: string, groupName: string){
+    return await this.backendService.post("/getAuthorisedGroupChannels", {"user" : currentUser, "groupName": groupName});
   }
 }

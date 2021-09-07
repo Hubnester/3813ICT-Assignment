@@ -1,7 +1,52 @@
 {
 	"users" : {
         "super" : {
+            "role" : "superAdmin"
+        }
+    },
+    "groups" : {
+        "test1" : {
+            "users" : ["super"],
+            "channels" : {
+                "cha1" : {
+                    "users" : ["super"],
+                    "chat" : [
+
+                    ]
+                },
+                "cha2" : {
+                    
+                },
+                "cha3" : {
+                    "users" : ["super"],
+                    "chat" : [
+
+                    ]
+                }
+            }
+        },
+        "test2" : {
             
+        },
+        "test3" : {
+            "users" : ["super"],
+            "channels" : {
+                "cha1" : {
+                    
+                },
+                "cha2" : {
+                    "users" : ["super"],
+                    "chat" : [
+
+                    ]
+                },
+                "cha3" : {
+                    "users" : ["super"],
+                    "chat" : [
+
+                    ]
+                }
+            }
         }
     }
 }

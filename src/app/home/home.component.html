@@ -1,1 +1,13 @@
-<p>home works!</p>
+<div class=container>
+    <input type="submit" value="Groups {{groupArrow}}" (click)="toggleGroups()">
+    <ng-container *ngIf="showGroups">
+        <div class="container" *ngFor="let group of authorisedGroups">
+            <li><input type="submit" value="{{group.name}} {{channelArrows[group.name]}}" (click)="toggleChannels(group.name)"></li>
+            <ng-container *ngIf="showChannels[group.name]">
+                <div class="container" *ngFor="let channel of authorisedChannels[group.name]">
+                    <li><input type="submit" value="{{channel.name}}" (click)="ngOnInit()"></li>
+                </div>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>

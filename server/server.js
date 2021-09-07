@@ -17,5 +17,6 @@ let server = http.listen(3000, function(){
 	console.log("Server listening on: " + host + " port: " + port);
 });
 
-require("./routes/getData.js")(app, path);
 require("./routes/auth.js")(app, path);
+require("./routes/getAuthorisedGroups.js")(app, path);
+require("./routes/getAuthorisedGroupChannels.js")(app, path);
