@@ -5,7 +5,13 @@
             <li><input type="submit" value="{{group.name}} {{channelArrows[group.name]}}" (click)="toggleChannels(group.name)"></li>
             <ng-container *ngIf="showChannels[group.name]">
                 <div class="container" *ngFor="let channel of authorisedChannels[group.name]">
-                    <li><input type="submit" value="{{channel.name}}" (click)="ngOnInit()"></li>
+                    <li>
+                        <input type="submit" value="{{channel.name}}" (click)="selectChannel()">
+                        <input *ngIf="isGroupAssis" type="submit" value="edit" (click)="editChannel()">
+                    </li>
+                </div>
+                <div class="container" *ngIf="isGroupAssis">
+                    <li><input type="submit" value="+ Create Channel" (click)="createChannel()"></li>
                 </div>
             </ng-container>
         </div>

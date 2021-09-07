@@ -34,9 +34,9 @@ export class HomeComponent implements OnInit {
     if (!this.currentUser){
       this.router.navigateByUrl("/login");
     }
-    var userRole: string = await this.dataService.getUserRole(this.currentUser);
+    var userRole: any = await this.dataService.getUserRole(this.currentUser);
     // Set the permissions based on the role (the fall through is intentional due to roles inheriting the abilities of the ones below)
-    switch (userRole){
+    switch (userRole.role){
       case "superAdmin":
         this.isSuperAdmin = true;
       case "groupAdmin":
@@ -46,6 +46,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // Toggle the visibility of groups the user is a member of
   async toggleGroups(): Promise<void>{
     this.authorisedGroups = await this.dataService.getAuthorisedGroups(this.currentUser);
     // Reset the authorised channels object
@@ -70,6 +71,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  // Toggle the visibility of the channels the user has access to
   async toggleChannels(groupName: any): Promise<void>{
     this.authorisedChannels[groupName] = await this.dataService.getAuthorisedGroupChannels(this.currentUser, groupName);
     this.showChannels[groupName] = !this.showChannels[groupName];
@@ -78,5 +80,17 @@ export class HomeComponent implements OnInit {
     } else{
       this.channelArrows[groupName] = SIDEARROW;
     }
+  }
+
+  async selectChannel(): Promise<void>{
+    //TODO
+  }
+
+  async editChannel(): Promise<void>{
+    console.log("editing channel...");
+  }
+
+  async createChannel(): Promise<void>{
+    console.log("creating channel...");
   }
 }

@@ -3,14 +3,18 @@
         "super" : {
             "role" : "superAdmin",
             "email" : "super@com.au"
+        },
+        "test" : {
+            "role" : "",
+            "email" : "test@com.au"
         }
     },
     "groups" : {
         "test1" : {
-            "users" : ["super"],
+            "users" : ["super", "test"],
             "channels" : {
                 "cha1" : {
-                    "users" : ["super"],
+                    "users" : ["super", "test"],
                     "chat" : [
 
                     ]
@@ -19,7 +23,7 @@
                     
                 },
                 "cha3" : {
-                    "users" : ["super"],
+                    "users" : ["super", "test"],
                     "chat" : [
 
                     ]
@@ -30,19 +34,19 @@
             
         },
         "test3" : {
-            "users" : ["super"],
+            "users" : ["super", "test"],
             "channels" : {
                 "cha1" : {
                     
                 },
                 "cha2" : {
-                    "users" : ["super"],
+                    "users" : ["super", "test"],
                     "chat" : [
 
                     ]
                 },
                 "cha3" : {
-                    "users" : ["super"],
+                    "users" : ["super", "test"],
                     "chat" : [
 
                     ]
