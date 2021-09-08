@@ -4,7 +4,6 @@ module.exports = function(app, path, data){
             return res.sendStatus(400);
         }
 
-        console.log(data.users[req.body.user].role)
         authorisedGroups = [];
         for(groupName in data.groups){
             // Fix for undefined when deleting

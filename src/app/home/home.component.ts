@@ -16,7 +16,8 @@ export class HomeComponent implements OnInit {
   // Variables for handling the users role
   isSuperAdmin: boolean = false;
   isGroupAdmin: boolean = false;
-  isGroupAssis: boolean = false;
+  groupAssisFor: any = {};
+  isGroupAssis: any = {};
   // Variables for handling groups
   authorisedGroups: any = [];
   showGroups: boolean = false;
@@ -41,14 +42,13 @@ export class HomeComponent implements OnInit {
       this.router.navigateByUrl("/login");
     }
     var userRole: any = await this.dataService.getUserRole(this.currentUser);
+    this.groupAssisFor = userRole.groupAssisFor;
     // Set the permissions based on the role (the fall through is intentional due to roles inheriting the abilities of the ones below)
     switch (userRole.role){
       case "superAdmin":
         this.isSuperAdmin = true;
       case "groupAdmin":
         this.isGroupAdmin = true;
-      case "groupAssis":
-        this.isGroupAssis = true;
     }
   }
 
@@ -76,6 +76,17 @@ export class HomeComponent implements OnInit {
       this.channelEditArrows[this.authorisedGroups[i]] = {};
       // Set the new channel names as empty string
       this.newChannelNames[this.authorisedGroups[i]] = "";
+      // Set the user as group assistant for the group
+      if (this.isGroupAdmin){
+        // Group admins and super admins are automatically group assistants
+        this.isGroupAssis[this.authorisedGroups[i]] = true;
+      } else{
+        for (var j in this.groupAssisFor){
+          if (this.groupAssisFor[j] == this.authorisedGroups[i]){
+            this.isGroupAssis[this.authorisedGroups[i]] = true;
+          }
+        }
+      }
     }
     this.showGroups = !this.showGroups;
     if (this.showGroups){

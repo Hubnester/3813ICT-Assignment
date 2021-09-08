@@ -7,7 +7,7 @@
                 <div class="container" *ngFor="let channel of authorisedChannels[group]">
                     <li>
                         <input type="submit" value="{{channel}}" (click)="selectChannel()">
-                        <input *ngIf="isGroupAssis" type="submit" value="edit {{channelEditArrows[group][channel]}}" (click)="toggleChannelEdit(group, channel)">
+                        <input *ngIf="isGroupAssis[group]" type="submit" value="edit {{channelEditArrows[group][channel]}}" (click)="toggleChannelEdit(group, channel)">
                         <div class="container" *ngIf="showChannelEdits[group][channel]">
                             <li><input type="submit" value="Add User"></li>
                             <li><input type="submit" value="Remove User"></li>
@@ -15,7 +15,7 @@
                         </div>
                     </li>
                 </div>
-                <div class="container" *ngIf="isGroupAssis">
+                <div class="container" *ngIf="isGroupAssis[group]">
                     <li><input [(ngModel)]=newChannelNames[group]><input type="submit" value="+ Create Channel" (click)="createChannel(group)"></li>
                 </div>
             </ng-container>
