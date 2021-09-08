@@ -6,11 +6,11 @@ module.exports = function(app, path, data){
 
         authorisedChannels = [];
         for(channelName in data.groups[req.body.groupName].channels){
+            // Fix for undefined when deleting
+            if (!data.groups[req.body.groupName].channels[channelName]) {continue;}
             for (i in data.groups[req.body.groupName].channels[channelName].users){
                 if (req.body.user == data.groups[req.body.groupName].channels[channelName].users[i]){
-                    var channelData = data.groups[req.body.groupName].channels[channelName];
-                    channelData.name = channelName;
-                    authorisedChannels.push(channelData);
+                    authorisedChannels.push(channelName);
                     break
                 }
             }

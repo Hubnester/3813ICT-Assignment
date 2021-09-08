@@ -25,6 +25,9 @@ export class HomeComponent implements OnInit {
   authorisedChannels: any = {};
   showChannels: any = {};
   channelArrows: any = {};
+  // Variables for handling channel edit display
+  showChannelEdits: any = {};
+  channelEditArrows: any = {};
 
   constructor(private router: Router, private dataService: DataService) { }
 
@@ -51,17 +54,21 @@ export class HomeComponent implements OnInit {
     this.authorisedGroups = await this.dataService.getAuthorisedGroups(this.currentUser);
     // Reset the authorised channels object
     this.authorisedChannels = {};
-    // Reset the show channels object
+    // Reset the other show variables
     this.showChannels = {};
-    // Reset what the channel arrows look like
+    this.showChannelEdits = {};
+    // Reset what the other show arrows look like
     this.channelArrows = {};
+    this.channelEditArrows = {};
     for (var i in this.authorisedGroups){
       // Add the group as a key to the authorised channels
-      this.authorisedChannels[this.authorisedGroups[i].name] = [];
+      this.authorisedChannels[this.authorisedGroups[i]] = [];
       // Set the current group to not show the channels in the current group
-      this.showChannels[this.authorisedGroups[i].name] = false;
+      this.showChannels[this.authorisedGroups[i]] = false;
+      this.showChannelEdits[this.authorisedGroups[i]] = {};
       // Set the current arrow for the channel display buttons to the side arrow
-      this.channelArrows[this.authorisedGroups[i].name] = SIDEARROW;
+      this.channelArrows[this.authorisedGroups[i]] = SIDEARROW;
+      this.channelEditArrows[this.authorisedGroups[i]] = {};
     }
     this.showGroups = !this.showGroups;
     if (this.showGroups){
@@ -75,6 +82,10 @@ export class HomeComponent implements OnInit {
   async toggleChannels(groupName: any): Promise<void>{
     this.authorisedChannels[groupName] = await this.dataService.getAuthorisedGroupChannels(this.currentUser, groupName);
     this.showChannels[groupName] = !this.showChannels[groupName];
+    for (var i in this.authorisedChannels[groupName]){
+      this.showChannelEdits[groupName][this.authorisedChannels[groupName][i]] = false;
+      this.channelEditArrows[groupName][this.authorisedChannels[groupName][i]] = SIDEARROW;
+    }
     if (this.showChannels[groupName]){
       this.channelArrows[groupName] = DOWNARROW;
     } else{
@@ -86,11 +97,23 @@ export class HomeComponent implements OnInit {
     //TODO
   }
 
-  async editChannel(): Promise<void>{
-    console.log("editing channel...");
+  async toggleChannelEdit(groupName:string, channelName: string): Promise<void>{
+    this.showChannelEdits[groupName][channelName] = !this.showChannelEdits[groupName][channelName];
+    if (this.showChannelEdits[groupName][channelName]){
+      this.channelEditArrows[groupName][channelName] = DOWNARROW;
+    } else{
+      this.channelEditArrows[groupName][channelName] = SIDEARROW;
+    }
   }
 
-  async createChannel(): Promise<void>{
+  async deleteChannel(groupName:string, channelName: string): Promise<void>{
+    await this.dataService.deleteChannel(groupName, channelName);
+    // Refresh the channel list
+    this.showChannels[groupName] = false;
+    this.toggleChannels(groupName);
+  }
+
+  async createChannel(groupName:string): Promise<void>{
     console.log("creating channel...");
   }
 }

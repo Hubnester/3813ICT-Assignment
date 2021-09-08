@@ -2,16 +2,21 @@
     <input type="submit" value="Groups {{groupArrow}}" (click)="toggleGroups()">
     <ng-container *ngIf="showGroups">
         <div class="container" *ngFor="let group of authorisedGroups">
-            <li><input type="submit" value="{{group.name}} {{channelArrows[group.name]}}" (click)="toggleChannels(group.name)"></li>
-            <ng-container *ngIf="showChannels[group.name]">
-                <div class="container" *ngFor="let channel of authorisedChannels[group.name]">
+            <li><input type="submit" value="{{group}} {{channelArrows[group]}}" (click)="toggleChannels(group)"></li>
+            <ng-container *ngIf="showChannels[group]">
+                <div class="container" *ngFor="let channel of authorisedChannels[group]">
                     <li>
-                        <input type="submit" value="{{channel.name}}" (click)="selectChannel()">
-                        <input *ngIf="isGroupAssis" type="submit" value="edit" (click)="editChannel()">
+                        <input type="submit" value="{{channel}}" (click)="selectChannel()">
+                        <input *ngIf="isGroupAssis" type="submit" value="edit {{channelEditArrows[group][channel]}}" (click)="toggleChannelEdit(group, channel)">
+                        <div class="container" *ngIf="showChannelEdits[group][channel]">
+                            <li><input type="submit" value="Add User"></li>
+                            <li><input type="submit" value="Remove User"></li>
+                            <li *ngIf="isGroupAdmin"><input type="submit" value="Delete Channel" (click)="deleteChannel(group, channel)"></li>
+                        </div>
                     </li>
                 </div>
                 <div class="container" *ngIf="isGroupAssis">
-                    <li><input type="submit" value="+ Create Channel" (click)="createChannel()"></li>
+                    <li><input type="submit" value="+ Create Channel" (click)="createChannel(group)"></li>
                 </div>
             </ng-container>
         </div>

@@ -6,11 +6,11 @@ module.exports = function(app, path, data){
 
         authorisedGroups = [];
         for(groupName in data.groups){
+            // Fix for undefined when deleting
+            if (!data.groups[groupName]){continue;}
             for (i in data.groups[groupName].users){
                 if (req.body.user == data.groups[groupName].users[i]){
-                    var groupData = data.groups[groupName];
-                    groupData.name = groupName;
-                    authorisedGroups.push(groupData);
+                    authorisedGroups.push(groupName);
                     break
                 }
             }

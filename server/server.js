@@ -20,8 +20,12 @@ let server = http.listen(3000, function(){
 });
 
 var serverData = JSON.parse(fs.readFileSync("./data.json"));
+function saveData(){
+	fs.writeFile("./data.json", JSON.stringify(serverData), err => {if (err) throw err});
+}
 
 require("./routes/auth.js")(app, path, serverData);
 require("./routes/getUserRole.js")(app, path, serverData);
 require("./routes/getAuthorisedGroups.js")(app, path, serverData);
 require("./routes/getAuthorisedGroupChannels.js")(app, path, serverData);
+require("./routes/deleteChannel.js")(app, path, serverData, saveData);
