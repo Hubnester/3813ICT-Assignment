@@ -16,6 +16,16 @@
                             </li>
                         </div>
                     </ng-container>
+                    <li><input type="submit" value="Add/Remove Group Assistants {{addRemoveGroupAssisArrows[group]}}" (click)="toggleAddRemoveGroupAssis(group)"></li>
+                    <ng-container *ngIf=showAddRemoveGroupAssis[group]>
+                        <div class="container" *ngFor="let user of groupAssis[group]">
+                            <li>
+                                {{user.name}}
+                                <input type="submit" value="+" (click)="addRemoveGroupAssis(group, user.name, false)" *ngIf="!user.assis">
+                                <input type="submit" value="-" (click)="addRemoveGroupAssis(group, user.name, true)" *ngIf="user.assis">
+                            </li>
+                        </div>
+                    </ng-container>
                     <li><input type="submit" value="Delete Group" (click)="deleteGroup(group)"></li>
                 </div>
             </li>
@@ -26,8 +36,16 @@
                         <input *ngIf="isGroupAssis[group]" type="submit" value="edit {{channelEditArrows[group][channel]}}" (click)="toggleChannelEdit(group, channel)">
                     </li>
                     <div class="container" *ngIf="showChannelEdits[group][channel]">
-                        <!-- <li><input type="submit" value="Add User"></li>
-                        <li><input type="submit" value="Remove User"></li> -->
+                        <li><input type="submit" value="Add/Remove Users {{addRemoveChannelUserArrows[group][channel]}}" (click)="toggleAddRemoveChannelUsers(group, channel)"></li>
+                        <ng-container *ngIf=showAddRemoveChannelUsers[group][channel]>
+                            <div class="container" *ngFor="let user of authorisedChannelUsers[group]">
+                                <li>
+                                    {{user.name}}
+                                    <input type="submit" value="+" (click)="addRemoveChannelUser(group, channel, user.name, false)" *ngIf="!user.authorised">
+                                    <input type="submit" value="-" (click)="addRemoveChannelUser(group, channel, user.name, true)" *ngIf="user.authorised">
+                                </li>
+                            </div>
+                        </ng-container>
                         <li *ngIf="isGroupAdmin"><input type="submit" value="Delete Channel" (click)="deleteChannel(group, channel)"></li>
                     </div>
                 </div>

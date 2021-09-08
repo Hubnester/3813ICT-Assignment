@@ -1,4 +1,3 @@
-import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
@@ -56,10 +55,19 @@ export class HomeComponent implements OnInit {
   };
   userNameAlreadyExists: boolean = false;
   newRoles: any = {};
-  // Variables for displaying the adding and removing of users from a group or channel\
+  // Variables for displaying the adding and removing of users from a group
   showAddRemoveGroupUsers: any = {};
   addRemoveGroupUserArrows: any = {};
   authorisedGroupUsers: any = {};
+  // Varaibles for displaying the adding and removing of group assistants
+  showAddRemoveGroupAssis: any = {};
+  addRemoveGroupAssisArrows: any = {};
+  groupAssis: any = {};
+  // Variables for displaying the adding and removing of users from a channel
+  showAddRemoveChannelUsers: any = {};
+  addRemoveChannelUserArrows: any = {};
+  authorisedChannelUsers: any = {};
+
 
   constructor(private router: Router, private dataService: DataService) { }
 
@@ -100,6 +108,12 @@ export class HomeComponent implements OnInit {
     this.authorisedGroupUsers = {};
     this.showAddRemoveGroupUsers = {};
     this.addRemoveGroupUserArrows = {};
+    this.groupAssis = {};
+    this.showAddRemoveGroupAssis = {};
+    this.addRemoveGroupAssisArrows = {};
+    this.authorisedChannelUsers = {};
+    this.showAddRemoveChannelUsers = {};
+    this.addRemoveChannelUserArrows = {};
     for (var i in this.authorisedGroups){
       // Add the group as a key to the authorised channels
       this.authorisedChannels[this.authorisedGroups[i]] = [];
@@ -117,6 +131,11 @@ export class HomeComponent implements OnInit {
       this.addRemoveGroupUserArrows[this.authorisedGroups[i]] = SIDEARROW;
       this.showAddRemoveGroupUsers[this.authorisedGroups[i]] = false;
       this.addRemoveGroupUserArrows[this.authorisedGroups[i]] = SIDEARROW;
+      this.showAddRemoveGroupAssis[this.authorisedGroups[i]] = false;
+      this.addRemoveGroupAssisArrows[this.authorisedGroups[i]] = SIDEARROW;
+      this.showAddRemoveChannelUsers[this.authorisedGroups[i]] = {};
+      this.addRemoveChannelUserArrows[this.authorisedGroups[i]] = {};
+      this.authorisedChannelUsers[this.authorisedGroups[i]] = {};
       // Set the user as group assistant for the group
       if (this.isGroupAdmin){
         // Group admins and super admins are automatically group assistants
@@ -182,6 +201,8 @@ export class HomeComponent implements OnInit {
     for (var i in this.authorisedChannels[groupName]){
       this.showChannelEdits[groupName][this.authorisedChannels[groupName][i]] = false;
       this.channelEditArrows[groupName][this.authorisedChannels[groupName][i]] = SIDEARROW;
+      this.showAddRemoveChannelUsers[groupName][this.authorisedChannels[groupName][i]] = false;
+      this.addRemoveChannelUserArrows[groupName][this.authorisedChannels[groupName][i]] = SIDEARROW;
     }
     if (this.showChannels[groupName]){
       this.channelArrows[groupName] = DOWNARROW;
@@ -312,5 +333,57 @@ export class HomeComponent implements OnInit {
     // Refresh the add/remove group user list
     this.showAddRemoveGroupUsers[groupName] = false;
     this.toggleAddRemoveGroupUsers(groupName);
+  }
+
+  async toggleAddRemoveGroupAssis(groupName: string){
+    this.showAddRemoveGroupAssis[groupName] = !this.showAddRemoveGroupAssis[groupName];
+    var users: any = await this.dataService.getUsers();
+    var groupAssis: any = await this.dataService.getGroupAssis(groupName);
+    this.groupAssis[groupName] = [];
+    for (var i in users){
+      if (groupAssis[users[i].name]){
+        this.groupAssis[groupName][i] = {"name" : users[i].name, "assis": true};
+      } else{
+        this.groupAssis[groupName][i] = {"name" : users[i].name, "assis": false};
+      }
+    }
+    if (this.showAddRemoveGroupAssis[groupName]){
+      this.addRemoveGroupAssisArrows[groupName] = DOWNARROW;
+    } else{
+      this.addRemoveGroupAssisArrows[groupName] = SIDEARROW;
+    }
+  }
+
+  async addRemoveGroupAssis(groupName:string, userName:string, remove: boolean){
+    await this.dataService.addRemoveGroupAssis(groupName, userName, remove);
+    // Refresh the add/remove group user list
+    this.showAddRemoveGroupAssis[groupName] = false;
+    this.toggleAddRemoveGroupAssis(groupName);
+  }
+
+  async toggleAddRemoveChannelUsers(groupName: string, channelName: string){
+    this.showAddRemoveChannelUsers[groupName][channelName] = !this.showAddRemoveGroupUsers[groupName][channelName];
+    var users: any = await this.dataService.getGroupUsers(groupName);
+    var authorisedUsers: any = await this.dataService.getAuthorisedChannelUsers(groupName);
+    this.authorisedChannelUsers[groupName][channelName] = [];
+    for (var i in users){
+      if (authorisedUsers[users[i].name]){
+        this.authorisedChannelUsers[groupName][channelName][i] = {"name" : users[i].name, "authorised": true};
+      } else{
+        this.authorisedChannelUsers[groupName][channelName][i] = {"name" : users[i].name, "authorised": false};
+      }
+    }
+    if (this.showAddRemoveChannelUsers[groupName][channelName]){
+      this.addRemoveChannelUserArrows[groupName][channelName] = DOWNARROW;
+    } else{
+      this.addRemoveChannelUserArrows[groupName][channelName] = SIDEARROW;
+    }
+  }
+
+  async addRemoveChannelUser(groupName:string, channelName: string, userName:string, remove: boolean){
+    await this.dataService.addRemoveChannelUser(groupName, channelName, userName, remove);
+    // Refresh the add/remove group user list
+    this.showAddRemoveChannelUsers[groupName][channelName] = false;
+    this.toggleAddRemoveChannelUsers(groupName, channelName);
   }
 }

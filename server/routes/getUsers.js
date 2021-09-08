@@ -6,6 +6,7 @@ module.exports = function(app, path, data){
             userData.name = user;
             users.push(userData);
         }
+        users.sort();
         res.send(users);
     });
 }

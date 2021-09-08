@@ -67,4 +67,14 @@ export class DataService {
   async addRemoveGroupUser(groupName: string, userName: string, remove: boolean){
     return await this.backendService.post("/addRemoveGroupUser", {"group": groupName, "user": userName, "remove": remove});
   }
+
+  // Get the group assistants for a group in object format
+  async getGroupAssis(groupName: string){
+    return await this.backendService.post("/getGroupAssis", {"group": groupName});
+  }
+
+  // Add or remove a user as a group assistant
+  async addRemoveGroupAssis(groupName: string, userName: string, remove: boolean){
+    return await this.backendService.post("/addRemoveGroupAssis", {"group": groupName, "user": userName, "remove": remove});
+  }
 }

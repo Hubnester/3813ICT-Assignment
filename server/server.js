@@ -37,3 +37,5 @@ require("./routes/updateUser.js")(app, path, serverData, saveData);
 require("./routes/deleteUser.js")(app, path, serverData, saveData);
 require("./routes/getAuthorisedGroupUsers.js")(app, path, serverData);
 require("./routes/addRemoveGroupUser.js")(app, path, serverData, saveData);
+require("./routes/getGroupAssis.js")(app, path, serverData);
+require("./routes/addRemoveGroupAssis.js")(app, path, serverData, saveData);

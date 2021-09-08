@@ -18,7 +18,7 @@ module.exports = function(app, path, data, saveData){
                 }
             }
         } else{
-            data.groups[req.body.group].users.push(req.body.user)
+            data.groups[req.body.group].users.push(req.body.user);
         }
 
         saveData(data);
