@@ -49,7 +49,7 @@ export class HomeComponent implements OnInit {
   createUserArrow: string = SIDEARROW;
   // Variables for creating a new user
   newUser: any = {
-    "username": "",
+    "name": "",
     "email": "",
     "role": "none"
   };
@@ -280,7 +280,7 @@ export class HomeComponent implements OnInit {
     } else{
       this.createUserArrow = SIDEARROW;
     }
-    this.newUser.username = "";
+    this.newUser.name = "";
     this.newUser.email = "";
     this.newUser.role = "none";
   }

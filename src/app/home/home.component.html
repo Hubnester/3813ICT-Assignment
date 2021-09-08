@@ -94,7 +94,7 @@
         <div class="container">
             <li><input type="submit" value="Create User {{createUserArrow}}" (click)="toggleCreateUser()"></li>
             <div class="container" *ngIf=showCreateUser>
-                <li><input placeholder="username" [(ngModel)]="newUser.username"></li>
+                <li><input placeholder="username" [(ngModel)]="newUser.name"></li>
                 <li><input placeholder="email" [(ngModel)]="newUser.email"></li>
                 <div *ngIf="isSuperAdmin">
                     <li>Role:</li>
