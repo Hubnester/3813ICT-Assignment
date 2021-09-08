@@ -47,4 +47,9 @@ export class DataService {
   async getUsers(){
     return await this.backendService.get("/getUsers");
   }
+
+  // Update or create a new user
+  async updateUser(userData: any, isNew: boolean = false){
+    return await this.backendService.post("/updateUser", {"user": userData, "new": isNew});
+  }
 }

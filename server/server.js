@@ -33,3 +33,4 @@ require("./routes/createChannel.js")(app, path, serverData, saveData);
 require("./routes/createGroup.js")(app, path, serverData, saveData);
 require("./routes/deleteGroup.js")(app, path, serverData, saveData);
 require("./routes/getUsers.js")(app, path, serverData);
+require("./routes/updateUser.js")(app, path, serverData, saveData);

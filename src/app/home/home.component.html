@@ -24,12 +24,17 @@
                     </div>
                 </div>
                 <div class="container" *ngIf="isGroupAssis[group]">
-                    <li><input [(ngModel)]=newChannelNames[group]><input type="submit" value="+ Create Channel" (click)="createChannel(group)"></li>
+                    <li>
+                        <input [(ngModel)]=newChannelNames[group]>
+                        <input type="submit" value="+ Create Channel" (click)="createChannel(group)">
+                    </li>
+                    <p *ngIf="channelNameAlreadyExists[group]">A channel with that name already exists!</p>
                 </div>
             </ng-container>
         </div>
         <div class="container" *ngIf="isGroupAdmin">
             <li><input [(ngModel)]=newGroupName><input type="submit" value="+ Create Group" (click)="createGroup()"></li>
+            <p *ngIf="groupNameAlreadyExists">A group with that name already exists!</p>
         </div>
     </ng-container>
 </div>
@@ -37,7 +42,29 @@
     <input *ngIf="isGroupAdmin" type="submit" value="Users {{usersArrow}}" (click)="toggleUsers()">
     <ng-container *ngIf="showUsers">
         <div class="container" *ngFor="let user of users">
-            <li>{{user.name}}</li>
+            <li><input type="submit" value="{{user.name}} {{editUserArrows[user.name]}}" (click)="toggleEditUser(user.name)"></li>
+        </div>
+        <div class="container">
+            <li><input type="submit" value="Create User {{createUserArrow}}" (click)="toggleCreateUser()"></li>
+            <div class="container" *ngIf=showCreateUser>
+                <li><input placeholder="username" [(ngModel)]="newUser.username"></li>
+                <li><input placeholder="email" [(ngModel)]="newUser.email"></li>
+                <div *ngIf="isSuperAdmin">
+                    <li>Role:</li>
+                    <div class="container">
+                        <li>
+                            <input type=radio name="role" value="groupAdmin" [(ngModel)]="newUser.role">
+                            Group Admin
+                        </li>
+                        <li>
+                            <input type=radio name="role" value="none" [(ngModel)]="newUser.role">
+                            None
+                        </li>
+                    </div>
+                </div>
+                <li><input type="submit" value="Add User" (click)="addUser()"></li>
+                <p *ngIf="userNameAlreadyExists">A user with that name already exists!</p>
+            </div>
         </div>
     </ng-container>
 </div>
