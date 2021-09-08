@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit {
   // Variables for handling channel edit display
   showChannelEdits: any = {};
   channelEditArrows: any = {};
+  // Variables for new groups and channels
+  newGroupName: string = "";
+  newChannelNames: any = {};
 
   constructor(private router: Router, private dataService: DataService) { }
 
@@ -60,6 +63,8 @@ export class HomeComponent implements OnInit {
     // Reset what the other show arrows look like
     this.channelArrows = {};
     this.channelEditArrows = {};
+    // Reset the new channel names
+    this.newChannelNames = {};
     for (var i in this.authorisedGroups){
       // Add the group as a key to the authorised channels
       this.authorisedChannels[this.authorisedGroups[i]] = [];
@@ -69,6 +74,8 @@ export class HomeComponent implements OnInit {
       // Set the current arrow for the channel display buttons to the side arrow
       this.channelArrows[this.authorisedGroups[i]] = SIDEARROW;
       this.channelEditArrows[this.authorisedGroups[i]] = {};
+      // Set the new channel names as empty string
+      this.newChannelNames[this.authorisedGroups[i]] = "";
     }
     this.showGroups = !this.showGroups;
     if (this.showGroups){
@@ -114,6 +121,6 @@ export class HomeComponent implements OnInit {
   }
 
   async createChannel(groupName:string): Promise<void>{
-    console.log("creating channel...");
+    await this.dataService.createChannel(groupName, this.newChannelNames[groupName])
   }
 }

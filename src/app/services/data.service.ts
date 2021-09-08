@@ -27,4 +27,9 @@ export class DataService {
   async deleteChannel(groupName: string, channelName: string){
     return await this.backendService.post("/deleteChannel", {"groupName": groupName, "channelName": channelName});
   }
+
+   // Create a new channel in the specified group
+   async createChannel(groupName: string, channelName: string){
+    return await this.backendService.post("/createChannel", {"groupName": groupName, "channelName": channelName});
+  }
 }

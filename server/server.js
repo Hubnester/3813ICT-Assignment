@@ -29,3 +29,4 @@ require("./routes/getUserRole.js")(app, path, serverData);
 require("./routes/getAuthorisedGroups.js")(app, path, serverData);
 require("./routes/getAuthorisedGroupChannels.js")(app, path, serverData);
 require("./routes/deleteChannel.js")(app, path, serverData, saveData);
+require("./routes/createChannel.js")(app, path, serverData, saveData);

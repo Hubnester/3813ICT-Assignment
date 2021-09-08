@@ -16,7 +16,7 @@
                     </li>
                 </div>
                 <div class="container" *ngIf="isGroupAssis">
-                    <li><input type="submit" value="+ Create Channel" (click)="createChannel(group)"></li>
+                    <li><input [(ngModel)]=newChannelNames[group]><input type="submit" value="+ Create Channel" (click)="createChannel(group)"></li>
                 </div>
             </ng-container>
         </div>
