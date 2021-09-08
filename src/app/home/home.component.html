@@ -2,23 +2,42 @@
     <input type="submit" value="Groups {{groupArrow}}" (click)="toggleGroups()">
     <ng-container *ngIf="showGroups">
         <div class="container" *ngFor="let group of authorisedGroups">
-            <li><input type="submit" value="{{group}} {{channelArrows[group]}}" (click)="toggleChannels(group)"></li>
+            <li>
+                <input type="submit" value="{{group}} {{channelArrows[group]}}" (click)="toggleChannels(group)">
+                <input *ngIf="isGroupAdmin" type="submit" value="edit {{groupEditArrows[group]}}" (click)="toggleGroupEdit(group)">
+                <div class="container" *ngIf="showGroupEdits[group]">
+                    <!-- <li><input type="submit" value="Add User"></li>
+                    <li><input type="submit" value="Remove User"></li> -->
+                    <li><input type="submit" value="Delete Group" (click)="deleteGroup(group)"></li>
+                </div>
+            </li>
             <ng-container *ngIf="showChannels[group]">
                 <div class="container" *ngFor="let channel of authorisedChannels[group]">
                     <li>
                         <input type="submit" value="{{channel}}" (click)="selectChannel()">
                         <input *ngIf="isGroupAssis[group]" type="submit" value="edit {{channelEditArrows[group][channel]}}" (click)="toggleChannelEdit(group, channel)">
-                        <div class="container" *ngIf="showChannelEdits[group][channel]">
-                            <li><input type="submit" value="Add User"></li>
-                            <li><input type="submit" value="Remove User"></li>
-                            <li *ngIf="isGroupAdmin"><input type="submit" value="Delete Channel" (click)="deleteChannel(group, channel)"></li>
-                        </div>
                     </li>
+                    <div class="container" *ngIf="showChannelEdits[group][channel]">
+                        <!-- <li><input type="submit" value="Add User"></li>
+                        <li><input type="submit" value="Remove User"></li> -->
+                        <li *ngIf="isGroupAdmin"><input type="submit" value="Delete Channel" (click)="deleteChannel(group, channel)"></li>
+                    </div>
                 </div>
                 <div class="container" *ngIf="isGroupAssis[group]">
                     <li><input [(ngModel)]=newChannelNames[group]><input type="submit" value="+ Create Channel" (click)="createChannel(group)"></li>
                 </div>
             </ng-container>
+        </div>
+        <div class="container" *ngIf="isGroupAdmin">
+            <li><input [(ngModel)]=newGroupName><input type="submit" value="+ Create Group" (click)="createGroup()"></li>
+        </div>
+    </ng-container>
+</div>
+<div class="container">
+    <input *ngIf="isGroupAdmin" type="submit" value="Users {{usersArrow}}" (click)="toggleUsers()">
+    <ng-container *ngIf="showUsers">
+        <div class="container" *ngFor="let user of users">
+            <li>{{user.name}}</li>
         </div>
     </ng-container>
 </div>

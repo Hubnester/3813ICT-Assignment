@@ -22,6 +22,9 @@ export class HomeComponent implements OnInit {
   authorisedGroups: any = [];
   showGroups: boolean = false;
   groupArrow: string = SIDEARROW;
+  // Variables for handling group edit display
+  showGroupEdits: any = {};
+  groupEditArrows: any = {};
   // Varianbles for handling channels
   authorisedChannels: any = {};
   showChannels: any = {};
@@ -32,6 +35,10 @@ export class HomeComponent implements OnInit {
   // Variables for new groups and channels
   newGroupName: string = "";
   newChannelNames: any = {};
+  // Variables for handling the user display
+  users: any = {};
+  showUsers: boolean = false;
+  usersArrow: string = SIDEARROW;
 
   constructor(private router: Router, private dataService: DataService) { }
 
@@ -71,9 +78,11 @@ export class HomeComponent implements OnInit {
       // Set the current group to not show the channels in the current group
       this.showChannels[this.authorisedGroups[i]] = false;
       this.showChannelEdits[this.authorisedGroups[i]] = {};
+      this.showGroupEdits[this.authorisedGroups[i]] = false;
       // Set the current arrow for the channel display buttons to the side arrow
       this.channelArrows[this.authorisedGroups[i]] = SIDEARROW;
       this.channelEditArrows[this.authorisedGroups[i]] = {};
+      this.groupEditArrows[this.authorisedGroups[i]] = SIDEARROW;
       // Set the new channel names as empty string
       this.newChannelNames[this.authorisedGroups[i]] = "";
       // Set the user as group assistant for the group
@@ -96,10 +105,46 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  async createGroup(): Promise<void>{
+    var retVal: any = await this.dataService.createGroup(this.newGroupName)
+    // Refresh the group list
+    if (retVal.alreadyExists){
+      console.log("Group Already Exists!")
+    } else{
+      this.showGroups = false;
+      this.toggleGroups();
+    }
+    this.newGroupName = "";
+  }
+
+  async toggleGroupEdit(groupName:string){
+    this.showGroupEdits[groupName] = !this.showGroupEdits[groupName];
+    // Hide the channel visibility if it's visible
+    if (this.showGroupEdits[groupName] && this.showChannels[groupName]){
+      this.toggleChannels(groupName);
+    }
+    if (this.showGroupEdits[groupName]){
+      this.groupEditArrows[groupName] = DOWNARROW;
+    } else{
+      this.groupEditArrows[groupName] = SIDEARROW;
+    }
+  }
+
+  async deleteGroup(groupName: string){
+    await this.dataService.deleteGroup(groupName);
+    // Refresh the group list
+    this.showGroups = false;
+    this.toggleGroups();
+  }
+
   // Toggle the visibility of the channels the user has access to
   async toggleChannels(groupName: any): Promise<void>{
     this.authorisedChannels[groupName] = await this.dataService.getAuthorisedGroupChannels(this.currentUser, groupName);
     this.showChannels[groupName] = !this.showChannels[groupName];
+    // Hide the edit group visibility if it's visible
+    if (this.showChannels[groupName] && this.showGroupEdits[groupName]){
+      this.toggleGroupEdit(groupName);
+    }
     for (var i in this.authorisedChannels[groupName]){
       this.showChannelEdits[groupName][this.authorisedChannels[groupName][i]] = false;
       this.channelEditArrows[groupName][this.authorisedChannels[groupName][i]] = SIDEARROW;
@@ -109,6 +154,18 @@ export class HomeComponent implements OnInit {
     } else{
       this.channelArrows[groupName] = SIDEARROW;
     }
+  }
+
+  async createChannel(groupName:string): Promise<void>{
+    var retVal: any = await this.dataService.createChannel(groupName, this.newChannelNames[groupName])
+    // Refresh the channel list
+    if (retVal.alreadyExists){
+      console.log("Channel Already Exists!");
+    } else{
+      this.showChannels[groupName] = false;
+      this.toggleChannels(groupName);
+    }
+    this.newChannelNames[groupName] = "";
   }
 
   async selectChannel(): Promise<void>{
@@ -131,14 +188,14 @@ export class HomeComponent implements OnInit {
     this.toggleChannels(groupName);
   }
 
-  async createChannel(groupName:string): Promise<void>{
-    var retVal: any = await this.dataService.createChannel(groupName, this.newChannelNames[groupName])
-    // Refresh the channel list
-    if (retVal.alreadyExists){
-      console.log("Channel Already Exists!")
+  async toggleUsers(): Promise<void>{
+    this.users = await this.dataService.getUsers();
+    console.log(this.users);
+    this.showUsers = !this.showUsers;
+    if (this.showUsers){
+      this.usersArrow = DOWNARROW;
     } else{
-      this.showChannels[groupName] = false;
-      this.toggleChannels(groupName);
+      this.usersArrow = SIDEARROW;
     }
   }
 }

@@ -6,9 +6,6 @@ module.exports = function(app, path, data){
 
         authorisedChannels = [];
         for(channelName in data.groups[req.body.groupName].channels){
-            // Fix for undefined when deleting
-            if (!data.groups[req.body.groupName].channels[channelName]) {continue;}
-
             // Make super admins and group admins able to see all channels
             if (data.users[req.body.user].role == "superAdmin" || data.users[req.body.user].role == "groupAdmin"){
                 authorisedChannels.push(channelName);
@@ -22,6 +19,7 @@ module.exports = function(app, path, data){
                 }
             }
         }
+        authorisedChannels.sort();
         res.send(authorisedChannels);
     });
 }

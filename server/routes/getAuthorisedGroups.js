@@ -6,9 +6,6 @@ module.exports = function(app, path, data){
 
         authorisedGroups = [];
         for(groupName in data.groups){
-            // Fix for undefined when deleting
-            if (!data.groups[groupName]){continue;}
-
             // Make super admins and group admins able to see all goups
             if (data.users[req.body.user].role == "superAdmin" || data.users[req.body.user].role == "groupAdmin"){
                 authorisedGroups.push(groupName);
@@ -22,6 +19,7 @@ module.exports = function(app, path, data){
                 }
             }
         }
+        authorisedGroups.sort();
         res.send(authorisedGroups);
     });
 }

@@ -28,8 +28,23 @@ export class DataService {
     return await this.backendService.post("/deleteChannel", {"groupName": groupName, "channelName": channelName});
   }
 
-   // Create a new channel in the specified group
-   async createChannel(groupName: string, channelName: string){
+  // Create a new channel in the specified group
+  async createChannel(groupName: string, channelName: string){
     return await this.backendService.post("/createChannel", {"groupName": groupName, "channelName": channelName});
+  }
+
+  // Create a new group
+  async createGroup(groupName: string){
+    return await this.backendService.post("/createGroup", {"groupName": groupName});
+  }
+
+  // Delete the specified group
+  async deleteGroup(groupName: string){
+    return await this.backendService.post("/deleteGroup", {"groupName": groupName});
+  }
+
+  // Get the users
+  async getUsers(){
+    return await this.backendService.get("/getUsers");
   }
 }
