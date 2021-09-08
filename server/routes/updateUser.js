@@ -4,9 +4,9 @@ module.exports = function(app, path, data, saveData){
             return res.sendStatus(400);
         }
 
-        if (!req.body.new || !data.users[req.body.user.username]){
-            data.users[req.body.user.username] = req.body.user;
-            delete data.users[req.body.user.username].username;
+        if (!req.body.new || !data.users[req.body.user.name]){
+            data.users[req.body.user.name] = req.body.user;
+            delete data.users[req.body.user.name].name;
         } else {
             return res.send({"alreadyExists" : true});
         }

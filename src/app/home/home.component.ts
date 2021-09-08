@@ -54,6 +54,9 @@ export class HomeComponent implements OnInit {
     "role": "none"
   };
   userNameAlreadyExists: boolean = false;
+  newRoles: any = {};
+  // Variables for displaying the adding and removing of users from a group or channel
+  addRemoveGroupUserArrows: any = {};
 
   constructor(private router: Router, private dataService: DataService) { }
 
@@ -90,6 +93,7 @@ export class HomeComponent implements OnInit {
     // Reset the error message displays
     this.groupNameAlreadyExists = false;
     this.channelNameAlreadyExists = {};
+    this.addRemoveGroupUserArrows = {};
     for (var i in this.authorisedGroups){
       // Add the group as a key to the authorised channels
       this.authorisedChannels[this.authorisedGroups[i]] = [];
@@ -104,6 +108,7 @@ export class HomeComponent implements OnInit {
       // Set the new channel names as empty string
       this.newChannelNames[this.authorisedGroups[i]] = "";
       this.channelNameAlreadyExists[this.authorisedGroups[i]] = false;
+      this.addRemoveGroupUserArrows[this.authorisedGroups[i]] = SIDEARROW;
       // Set the user as group assistant for the group
       if (this.isGroupAdmin){
         // Group admins and super admins are automatically group assistants
@@ -215,9 +220,11 @@ export class HomeComponent implements OnInit {
     this.editUserArrows = {};
     this.showCreateUser = false;
     this.createUserArrow = SIDEARROW;
+    this.newRoles = {};
     for (var i in this.users){
       this.showEditUsers[this.users[i].name] = false;
       this.editUserArrows[this.users[i].name] = SIDEARROW;
+      this.newRoles[this.users[i].name] = this.users[i].role;
     }
     if (this.showUsers){
       this.usersArrow = DOWNARROW;
@@ -261,6 +268,7 @@ export class HomeComponent implements OnInit {
   }
 
   async updateUser(user: any): Promise<void>{
+    user.role = this.newRoles[user.name];
     await this.dataService.updateUser(user);
   }
 
