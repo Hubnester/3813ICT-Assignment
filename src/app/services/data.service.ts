@@ -52,4 +52,9 @@ export class DataService {
   async updateUser(userData: any, isNew: boolean = false){
     return await this.backendService.post("/updateUser", {"user": userData, "new": isNew});
   }
+
+  // Update or create a new user
+  async deleteUser(userName: string){
+    return await this.backendService.post("/deleteUser", {"user": userName});
+  }
 }

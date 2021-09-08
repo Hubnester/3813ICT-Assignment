@@ -250,14 +250,24 @@ export class HomeComponent implements OnInit {
 
   async addUser(): Promise<void>{
     var retVal: any = await this.dataService.updateUser(this.newUser, true);
-    // Refresh the user list
     if (retVal.alreadyExists){
       this.userNameAlreadyExists = true;
     } else{
-      console.log('???')
       this.showUsers = false;
+      // Refresh the user list
       await this.toggleUsers();
       this.toggleCreateUser();
     }
+  }
+
+  async updateUser(user: any): Promise<void>{
+    await this.dataService.updateUser(user);
+  }
+
+  async deleteUser(userName: string): Promise<void>{
+    await this.dataService.deleteUser(userName);
+    // Refresh the user list
+    this.showUsers = false;
+    this.toggleUsers();
   }
 }

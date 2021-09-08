@@ -6,8 +6,7 @@
                 <input type="submit" value="{{group}} {{channelArrows[group]}}" (click)="toggleChannels(group)">
                 <input *ngIf="isGroupAdmin" type="submit" value="edit {{groupEditArrows[group]}}" (click)="toggleGroupEdit(group)">
                 <div class="container" *ngIf="showGroupEdits[group]">
-                    <!-- <li><input type="submit" value="Add User"></li>
-                    <li><input type="submit" value="Remove User"></li> -->
+                    <li><input type="submit" value="Add/Remove Users {{addRemoveGroupUserArrow}}"></li>
                     <li><input type="submit" value="Delete Group" (click)="deleteGroup(group)"></li>
                 </div>
             </li>
@@ -43,6 +42,26 @@
     <ng-container *ngIf="showUsers">
         <div class="container" *ngFor="let user of users">
             <li><input type="submit" value="{{user.name}} {{editUserArrows[user.name]}}" (click)="toggleEditUser(user.name)"></li>
+            <div class="container" *ngIf="showEditUsers[user.name]">
+                <div *ngIf="isSuperAdmin">
+                    <li>Role:</li>
+                    <div class="container">
+                        <li>
+                            <input type=radio name="{{user.name}}.role" value="superAdmin" [(ngModel)]="user.role" (click)="updateUser(user)">
+                            Super Admin
+                        </li>
+                        <li>
+                            <input type=radio name="{{user.name}}.role" value="groupAdmin" [(ngModel)]="user.role" (click)="updateUser(user)">
+                            Group Admin
+                        </li>
+                        <li>
+                            <input type=radio name="{{user.name}}.role" value="none" [(ngModel)]="user.role" (click)="updateUser(user)">
+                            None
+                        </li>
+                    </div>
+                    <li><input type="submit" value="Delete User" (click)="deleteUser(user.name)"></li>
+                </div>
+            </div>
         </div>
         <div class="container">
             <li><input type="submit" value="Create User {{createUserArrow}}" (click)="toggleCreateUser()"></li>
