@@ -7,7 +7,7 @@ module.exports = function(app, path, data, saveData){
         if (!data.groups[req.body.groupName].channels[req.body.channelName]){
             data.groups[req.body.groupName].channels[req.body.channelName] = {"users" : [], "channels" : {}};
         } else{
-            res.send({"alreadyExists" : true});
+            return res.send({"alreadyExists" : true});
         }
         saveData(data);
         res.send({});

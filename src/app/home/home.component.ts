@@ -121,6 +121,13 @@ export class HomeComponent implements OnInit {
   }
 
   async createChannel(groupName:string): Promise<void>{
-    await this.dataService.createChannel(groupName, this.newChannelNames[groupName])
+    var retVal: any = await this.dataService.createChannel(groupName, this.newChannelNames[groupName])
+    // Refresh the channel list
+    if (retVal.alreadyExists){
+      console.log("Channel Already Exists!")
+    } else{
+      this.showChannels[groupName] = false;
+      this.toggleChannels(groupName);
+    }
   }
 }
