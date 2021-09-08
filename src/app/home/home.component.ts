@@ -362,9 +362,9 @@ export class HomeComponent implements OnInit {
   }
 
   async toggleAddRemoveChannelUsers(groupName: string, channelName: string){
-    this.showAddRemoveChannelUsers[groupName][channelName] = !this.showAddRemoveGroupUsers[groupName][channelName];
+    this.showAddRemoveChannelUsers[groupName][channelName] = !this.showAddRemoveChannelUsers[groupName][channelName];
     var users: any = await this.dataService.getGroupUsers(groupName);
-    var authorisedUsers: any = await this.dataService.getAuthorisedChannelUsers(groupName);
+    var authorisedUsers: any = await this.dataService.getAuthorisedChannelUsers(groupName, channelName);
     this.authorisedChannelUsers[groupName][channelName] = [];
     for (var i in users){
       if (authorisedUsers[users[i].name]){

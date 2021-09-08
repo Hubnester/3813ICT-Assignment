@@ -1,1 +1,11 @@
-{"users":{"super":{"role":"superAdmin","email":"super@com.au","name":"super","groupAssisFor":[]},"group":{"role":"groupAdmin","email":"super@com.au","name":"group","groupAssisFor":[]},"assis":{"role":"none","email":"super@com.au","groupAssisFor":["test1"],"name":"assis"},"none":{"email":"super@com.au","role":"none","name":"none","groupAssisFor":[]}},"groups":{"Group 1":{"users":["none"],"channels":{"Channel 1":{"users":[],"chat":{}},"Channel 2":{"users":[],"chat":{}},"Channel 3":{"users":[],"chat":{}}}},"Group 2":{"users":["none"],"channels":{}},"Group 3":{"users":["none"],"channels":{}}}}
+{
+    "users": {
+        "super": {
+            "email": "",
+            "role": "superAdmin"
+        }
+    },
+    "groups": {
+
+    }
+}

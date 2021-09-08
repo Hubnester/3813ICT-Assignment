@@ -38,7 +38,7 @@
                     <div class="container" *ngIf="showChannelEdits[group][channel]">
                         <li><input type="submit" value="Add/Remove Users {{addRemoveChannelUserArrows[group][channel]}}" (click)="toggleAddRemoveChannelUsers(group, channel)"></li>
                         <ng-container *ngIf=showAddRemoveChannelUsers[group][channel]>
-                            <div class="container" *ngFor="let user of authorisedChannelUsers[group]">
+                            <div class="container" *ngFor="let user of authorisedChannelUsers[group][channel]">
                                 <li>
                                     {{user.name}}
                                     <input type="submit" value="+" (click)="addRemoveChannelUser(group, channel, user.name, false)" *ngIf="!user.authorised">

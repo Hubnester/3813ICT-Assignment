@@ -39,3 +39,6 @@ require("./routes/getAuthorisedGroupUsers.js")(app, path, serverData);
 require("./routes/addRemoveGroupUser.js")(app, path, serverData, saveData);
 require("./routes/getGroupAssis.js")(app, path, serverData);
 require("./routes/addRemoveGroupAssis.js")(app, path, serverData, saveData);
+require("./routes/getGroupUsers.js")(app, path, serverData);
+require("./routes/getAuthorisedChannelUsers.js")(app, path, serverData);
+require("./routes/addRemoveChannelUser.js")(app, path, serverData, saveData);

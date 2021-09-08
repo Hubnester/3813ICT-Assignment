@@ -1,9 +1,13 @@
 module.exports = function(app, path, data){
-    app.get("/getUsers", function(req, res){
+    app.post("/getGroupUsers", function(req, res){
+        if (!req.body){
+            return res.sendStatus(400);
+        }
+
         var users = [];
-        for (var user in data.users){
-            var userData = data.users[user];
-            userData.name = user;
+        for (var i in data.groups[req.body.group].users){
+            var userData = {};
+            userData.name = data.groups[req.body.group].users[i];
             users.push(userData);
         }
         users.sort((first, second) => {
