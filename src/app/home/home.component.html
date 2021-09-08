@@ -6,7 +6,16 @@
                 <input type="submit" value="{{group}} {{channelArrows[group]}}" (click)="toggleChannels(group)">
                 <input *ngIf="isGroupAdmin" type="submit" value="edit {{groupEditArrows[group]}}" (click)="toggleGroupEdit(group)">
                 <div class="container" *ngIf="showGroupEdits[group]">
-                    <li><input type="submit" value="Add/Remove Users {{addRemoveGroupUserArrows[group]}}"></li>
+                    <li><input type="submit" value="Add/Remove Users {{addRemoveGroupUserArrows[group]}}" (click)="toggleAddRemoveGroupUsers(group)"></li>
+                    <ng-container *ngIf=showAddRemoveGroupUsers[group]>
+                        <div class="container" *ngFor="let user of authorisedGroupUsers[group]">
+                            <li>
+                                {{user.name}}
+                                <input type="submit" value="+" (click)="addRemoveGroupUser(group, user.name, false)" *ngIf="!user.authorised">
+                                <input type="submit" value="-" (click)="addRemoveGroupUser(group, user.name, true)" *ngIf="user.authorised">
+                            </li>
+                        </div>
+                    </ng-container>
                     <li><input type="submit" value="Delete Group" (click)="deleteGroup(group)"></li>
                 </div>
             </li>

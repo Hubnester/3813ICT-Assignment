@@ -57,4 +57,14 @@ export class DataService {
   async deleteUser(userName: string){
     return await this.backendService.post("/deleteUser", {"user": userName});
   }
+
+  // Get the authorised users for a group in object format
+  async getAuthorisedGroupUsers(groupName: string){
+    return await this.backendService.post("/getAuthorisedGroupUsers", {"group": groupName});
+  }
+
+  // Add or remove a user from a group
+  async addRemoveGroupUser(groupName: string, userName: string, remove: boolean){
+    return await this.backendService.post("/addRemoveGroupUser", {"group": groupName, "user": userName, "remove": remove});
+  }
 }

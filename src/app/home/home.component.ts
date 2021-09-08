@@ -1,3 +1,4 @@
+import { ThrowStmt } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../services/data.service';
@@ -38,7 +39,7 @@ export class HomeComponent implements OnInit {
   newGroupName: string = "";
   newChannelNames: any = {};
   // Variables for handling the user display
-  users: any = {};
+  users: any = [];
   showUsers: boolean = false;
   usersArrow: string = SIDEARROW;
   // Variables for handling the user editing display
@@ -55,8 +56,10 @@ export class HomeComponent implements OnInit {
   };
   userNameAlreadyExists: boolean = false;
   newRoles: any = {};
-  // Variables for displaying the adding and removing of users from a group or channel
+  // Variables for displaying the adding and removing of users from a group or channel\
+  showAddRemoveGroupUsers: any = {};
   addRemoveGroupUserArrows: any = {};
+  authorisedGroupUsers: any = {};
 
   constructor(private router: Router, private dataService: DataService) { }
 
@@ -94,6 +97,9 @@ export class HomeComponent implements OnInit {
     this.groupNameAlreadyExists = false;
     this.channelNameAlreadyExists = {};
     this.addRemoveGroupUserArrows = {};
+    this.authorisedGroupUsers = {};
+    this.showAddRemoveGroupUsers = {};
+    this.addRemoveGroupUserArrows = {};
     for (var i in this.authorisedGroups){
       // Add the group as a key to the authorised channels
       this.authorisedChannels[this.authorisedGroups[i]] = [];
@@ -109,6 +115,8 @@ export class HomeComponent implements OnInit {
       this.newChannelNames[this.authorisedGroups[i]] = "";
       this.channelNameAlreadyExists[this.authorisedGroups[i]] = false;
       this.addRemoveGroupUserArrows[this.authorisedGroups[i]] = SIDEARROW;
+      this.showAddRemoveGroupUsers[this.authorisedGroups[i]] = false;
+      this.addRemoveGroupUserArrows[this.authorisedGroups[i]] = SIDEARROW;
       // Set the user as group assistant for the group
       if (this.isGroupAdmin){
         // Group admins and super admins are automatically group assistants
@@ -121,6 +129,7 @@ export class HomeComponent implements OnInit {
         }
       }
     }
+
     this.showGroups = !this.showGroups;
     if (this.showGroups){
       this.groupArrow = DOWNARROW;
@@ -277,5 +286,31 @@ export class HomeComponent implements OnInit {
     // Refresh the user list
     this.showUsers = false;
     this.toggleUsers();
+  }
+
+  async toggleAddRemoveGroupUsers(groupName: string){
+    this.showAddRemoveGroupUsers[groupName] = !this.showAddRemoveGroupUsers[groupName];
+    var users: any = await this.dataService.getUsers();
+    var authorisedUsers: any = await this.dataService.getAuthorisedGroupUsers(groupName);
+    this.authorisedGroupUsers[groupName] = [];
+    for (var i in users){
+      if (authorisedUsers[users[i].name]){
+        this.authorisedGroupUsers[groupName][i] = {"name" : users[i].name, "authorised": true};
+      } else{
+        this.authorisedGroupUsers[groupName][i] = {"name" : users[i].name, "authorised": false};
+      }
+    }
+    if (this.showAddRemoveGroupUsers[groupName]){
+      this.addRemoveGroupUserArrows[groupName] = DOWNARROW;
+    } else{
+      this.addRemoveGroupUserArrows[groupName] = SIDEARROW;
+    }
+  }
+
+  async addRemoveGroupUser(groupName:string, userName:string, remove: boolean){
+    await this.dataService.addRemoveGroupUser(groupName, userName, remove);
+    // Refresh the add/remove group user list
+    this.showAddRemoveGroupUsers[groupName] = false;
+    this.toggleAddRemoveGroupUsers(groupName);
   }
 }
