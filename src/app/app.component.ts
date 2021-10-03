@@ -6,20 +6,21 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
   title = 'assignment';
 
-  showLogout: boolean = true;
+  showNavBar: boolean = true;
 
   constructor(private router: Router) { }
 
   // Hide the logout button if hte user isn't logged in
   ngAfterViewChecked(): void{
-    // TODO: Fix error this causes
+    // This causes an error when in debug mode
     if (this.router.url == "/login"){
-      this.showLogout = false;
+      this.showNavBar = false;
     } else{
-      this.showLogout = true;
+      this.showNavBar = true;
     }
   }
 
