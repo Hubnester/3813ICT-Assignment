@@ -19,12 +19,12 @@ export class GroupsComponent implements OnInit {
 
   constructor(private router: Router, private dataService: DataService) { }
 
-  ngOnInit(): void {
-    this.authorisedChannels = this.dataService.getAuthorisedChannels();
+  async ngOnInit(): Promise<void> {
+    this.authorisedChannels = await this.dataService.getAuthorisedChannels();
   }
 
   // Function for deleting a group or channel
-  delete(group: string, channel: string | null = null): void {
+  async delete(group: string, channel: string | null = null): Promise<void> {
     let confirmationString: string = "";
     // Create the confirmation string based on whether a group or channel is being deleted
     if (channel){
@@ -35,6 +35,7 @@ export class GroupsComponent implements OnInit {
     // Get confimation from the user
     if (confirm(confirmationString)){
       this.dataService.deleteGroupChannel(group, channel);
+      this.authorisedChannels = await this.dataService.getAuthorisedChannels();
     }
   }
 }

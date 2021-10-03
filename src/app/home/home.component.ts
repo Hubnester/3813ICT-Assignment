@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
 
   // Toggle the visibility of groups the user is a member of
   async toggleGroups(): Promise<void>{
-    this.authorisedGroups = await this.dataService.getAuthorisedGroups(this.currentUser);
+    //this.authorisedGroups = await this.dataService.getAuthorisedGroups(this.currentUser);
     // Reset the authorised channels object
     this.authorisedChannels = {};
     // Reset the other show variables
@@ -191,7 +191,7 @@ export class HomeComponent implements OnInit {
 
   // Toggle the visibility of the channels the user has access to
   async toggleChannels(groupName: any): Promise<void>{
-    this.authorisedChannels[groupName] = await this.dataService.getAuthorisedGroupChannels(this.currentUser, groupName);
+    //this.authorisedChannels[groupName] = await this.dataService.getAuthorisedGroupChannels(this.currentUser, groupName);
     this.showChannels[groupName] = !this.showChannels[groupName];
     this.channelNameAlreadyExists[groupName] = false;
     // Hide the edit group visibility if it's visible

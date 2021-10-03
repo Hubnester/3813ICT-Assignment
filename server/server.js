@@ -29,7 +29,7 @@ let checkUserAuthorised = (minRole, user, group = null) => {
 	// Lambda function for checking if the user is a group assistant of the supplied group
 	let checkGroupAssis = () => {
 		for (let groupAssisOf of serverData.users[user].groupAssisFor){
-			if (groupAssisOf == group){
+			if (group == groupAssisOf){
 				return true;
 			}
 			return false;
@@ -49,13 +49,12 @@ let checkUserAuthorised = (minRole, user, group = null) => {
 // NOT YET USING MONGODB ROUTES
 
 require("./routes/deleteGroupChannel.js")(app, serverData, checkUserAuthorised, saveData);
+require("./routes/getAuthorisedChannels")(app, serverData, checkUserAuthorised)
 
 // NOT YET CONVERTED TO CHECK USER AUTH ROUTES
 
 require("./routes/auth.js")(app, path, serverData);
 require("./routes/getUserRole.js")(app, path, serverData);
-require("./routes/getAuthorisedGroups.js")(app, path, serverData);
-require("./routes/getAuthorisedGroupChannels.js")(app, path, serverData);
 require("./routes/createChannel.js")(app, path, serverData, saveData);
 require("./routes/createGroup.js")(app, path, serverData, saveData);
 require("./routes/getUsers.js")(app, path, serverData);
