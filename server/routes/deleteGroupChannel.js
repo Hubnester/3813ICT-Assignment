@@ -1,4 +1,4 @@
-module.exports = function(app, data, checkUserAuthorised, saveData){
+module.exports = function(app, dbData, data, checkUserAuthorised, saveData){
     app.post("/deleteGroupChannel", function(req, res){
         if (!req.body || !req.body.user || !req.body.groupName || !data.groups[req.body.groupName]){
             return res.sendStatus(400);
