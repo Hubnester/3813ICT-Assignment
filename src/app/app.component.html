@@ -3,7 +3,7 @@
         <ul class="nav navbar-nav">
             <a class="nav-link" (click)=logOut()>Log Out</a>
             <a class="nav-link" href="">Groups</a>
-            <a class="nav-link" href="/users">Users</a>
+            <a class="nav-link" href="/users" *ngIf="showUsers">Users</a>
             <a class="nav-link" href="/profile">Edit Profile</a>
         </ul>
     </div>

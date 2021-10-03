@@ -183,10 +183,10 @@ export class HomeComponent implements OnInit {
   }
 
   async deleteGroup(groupName: string){
-    await this.dataService.deleteGroup(groupName);
-    // Refresh the group list
-    this.showGroups = false;
-    this.toggleGroups();
+  //  await this.dataService.deleteGroup(groupName);
+  //  // Refresh the group list
+  //  this.showGroups = false;
+  //  this.toggleGroups();
   }
 
   // Toggle the visibility of the channels the user has access to
@@ -237,10 +237,10 @@ export class HomeComponent implements OnInit {
   }
 
   async deleteChannel(groupName:string, channelName: string): Promise<void>{
-    await this.dataService.deleteChannel(groupName, channelName);
-    // Refresh the channel list
-    this.showChannels[groupName] = false;
-    this.toggleChannels(groupName);
+  //  await this.dataService.deleteChannel(groupName, channelName);
+  //  // Refresh the channel list
+  //  this.showChannels[groupName] = false;
+  //  this.toggleChannels(groupName);
   }
 
   async toggleUsers(): Promise<void>{

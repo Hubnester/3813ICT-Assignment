@@ -24,14 +24,40 @@ function saveData(){
 	fs.writeFile("./data.json", JSON.stringify(serverData), err => {if (err) throw err});
 }
 
+// Function for getting the user role
+let checkUserAuthorised = (minRole, user, group = null) => {
+	// Lambda function for checking if the user is a group assistant of the supplied group
+	let checkGroupAssis = () => {
+		for (let groupAssisOf of serverData.users[user].groupAssisFor){
+			if (groupAssisOf == group){
+				return true;
+			}
+			return false;
+		}
+	}
+	// Check if the user meets the min role requirement
+	if (minRole == "superAdmin" && serverData.users[user].role == "superAdmin"){
+		return true;
+	} else if (minRole == "groupAdmin" && (serverData.users[user].role == "superAdmin" || serverData.users[user].role == "groupAdmin")){
+		return true;
+	} else if (group && minRole == "groupAssis" && (serverData.users[user].role == "superAdmin" || serverData.users[user].role == "groupAdmin" || checkGroupAssis())){
+		return true;
+	}
+	return false;
+}
+
+// NOT YET USING MONGODB ROUTES
+
+require("./routes/deleteGroupChannel.js")(app, serverData, checkUserAuthorised, saveData);
+
+// NOT YET CONVERTED TO CHECK USER AUTH ROUTES
+
 require("./routes/auth.js")(app, path, serverData);
 require("./routes/getUserRole.js")(app, path, serverData);
 require("./routes/getAuthorisedGroups.js")(app, path, serverData);
 require("./routes/getAuthorisedGroupChannels.js")(app, path, serverData);
-require("./routes/deleteChannel.js")(app, path, serverData, saveData);
 require("./routes/createChannel.js")(app, path, serverData, saveData);
 require("./routes/createGroup.js")(app, path, serverData, saveData);
-require("./routes/deleteGroup.js")(app, path, serverData, saveData);
 require("./routes/getUsers.js")(app, path, serverData);
 require("./routes/updateUser.js")(app, path, serverData, saveData);
 require("./routes/deleteUser.js")(app, path, serverData, saveData);

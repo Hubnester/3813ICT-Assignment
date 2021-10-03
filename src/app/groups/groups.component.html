@@ -1,0 +1,42 @@
+<div>
+    <table>
+        <tr>
+            <th>Groups</th>
+            <th></th>
+            <th>Channels</th>
+        </tr>
+        <ng-container *ngFor="let group of Object.keys(authorisedChannels)">
+            <tr style="padding-top:20px;">
+                <td>{{group}}</td>
+                <td>
+                    <input type="submit" value="Manage Users">
+                    <input type="submit" value="Delete" (click)="delete(group)">
+                </td>
+            </tr>
+            <tr style="padding-top:20px;" *ngFor="let channel of authorisedChannels[group]">
+                <td></td>
+                <td></td>
+                <td>{{channel}}</td>
+                <td>
+                    <input type="submit" value="Join">
+                    <input type="submit" value="Manage Users">
+                    <input type="submit" value="Delete" (click)="delete(group, channel)">
+                </td>
+            </tr>
+            <tr style="padding-top:20px;">
+                <td></td>
+                <td></td>
+                <td><input type="text"></td>
+                <td>
+                    <input type="submit" value="Add">
+                </td>
+            </tr>
+        </ng-container>
+        <tr style="padding-top:20px;">
+            <td><input type="text"></td>
+            <td>
+                <input type="submit" value="Add">
+            </td>
+        </tr>
+    </table>
+</div>
