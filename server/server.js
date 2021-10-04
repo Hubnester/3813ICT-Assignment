@@ -30,49 +30,10 @@ function saveData(){
 	fs.writeFile("./data.json", JSON.stringify(serverData), err => {if (err) throw err});
 }
 
-// Function for getting the user role
-let checkUserAuthorised = async (minRole, userName, group = null) => {
-	let retVal = undefined;
-	// Connect to the database
-	dbData.MongoClient.connect(dbData.url, function(err, client){
-		if (err) {throw err;}
-		let db = client.db(dbData.name);
-		let collection = db.collection("users");
-		collection.find({"name": userName}).toArray((err, user) => {
-			// Close the db since we have what we need from it
-			client.close();
-
-			// Lambda function for checking if the user is a group assistant of the supplied group
-			let checkGroupAssis = () => {
-				for (let groupAssisOf of user[0].groupAssisFor){
-					if (group == groupAssisOf){
-						return true;
-					}
-					return false;
-				}
-			}
-			// Check if the user meets the min role requirement
-			if (minRole == "superAdmin" && user[0].role == "superAdmin"){
-				retVal = true;
-			} else if (minRole == "groupAdmin" && (user[0].role == "superAdmin" || user[0].role == "groupAdmin")){
-				retVal = true;
-			} else if (group && minRole == "groupAssis" && (user[0].role == "superAdmin" || user[0].role == "groupAdmin" || checkGroupAssis())){
-				retVal = true;
-			} else {
-				retVal = false;
-			}
-			client.close();
-		});
-	});
-	// Wait for the the retVal to be gotten from the DB
-	while (retVal == undefined){
-		await (new Promise(resolve => setTimeout(resolve, 100)));
-	}
-	return retVal;
-}
+var checkUserAuthorised = require("./routes/checkUserAuthorised.js")(app, dbData);
 
 require("./routes/deleteGroupChannel.js")(app, dbData, serverData, checkUserAuthorised, saveData);
-require("./routes/getAuthorisedChannels")(app, dbData, serverData, checkUserAuthorised)
+require("./routes/getAuthorisedChannels.js")(app, dbData, serverData, checkUserAuthorised)
 
 // NOT YET CONVERTED TO CHECK USER AUTH ROUTES
 
