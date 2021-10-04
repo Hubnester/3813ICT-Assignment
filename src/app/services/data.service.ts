@@ -8,6 +8,11 @@ export class DataService {
 
   constructor( private backendService: BackendService ) { }
 
+  // Check if the user meets the supplied minimum authorisation
+  async checkUserAuthorised(minRole: string, group: string | null = null){
+    return await this.backendService.post("/checkUserAuthorised", {"minRole": minRole, "groupName": group, "user": localStorage.getItem("currentUser")})
+  }
+
   // Get the channels in the groups the user is authorised to see
   async getAuthorisedChannels(): Promise<object>{
     return await this.backendService.post("/getAuthorisedChannels", {"user": localStorage.getItem("currentUser")});

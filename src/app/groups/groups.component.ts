@@ -14,7 +14,7 @@ export class GroupsComponent implements OnInit {
   // Variables for handling the users role
   isSuperAdmin: boolean = false;
   isGroupAdmin: boolean = false;
-  isGroupAssis: string[] = [];
+  isGroupAssis: any = {};
   // Variable for the authorised channels in the authorised groups
   authorisedChannels: any = {};
 
@@ -22,6 +22,11 @@ export class GroupsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.authorisedChannels = await this.dataService.getAuthorisedChannels();
+    this.isSuperAdmin = (await this.dataService.checkUserAuthorised("superAdmin")).authorised;
+    this.isGroupAdmin = (await this.dataService.checkUserAuthorised("groupAdmin")).authorised;
+    for (let group in this.authorisedChannels){
+      this.isGroupAssis[group] = (await this.dataService.checkUserAuthorised("groupAssis", group)).authorised;
+    }
   }
 
   // Function for deleting a group or channel

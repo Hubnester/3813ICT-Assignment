@@ -12,7 +12,9 @@ export class AppComponent {
   title = 'assignment';
 
   showNavBar: boolean = true;
-  showUsers: boolean = false;
+  showUsers: boolean | null = null;
+
+  checkingAuth: any = undefined;
 
   constructor(private router: Router, private dataService: DataService) { }
 
@@ -21,26 +23,24 @@ export class AppComponent {
     // This causes an error when in debug mode
     if (this.router.url == "/login"){
       this.showNavBar = false;
+      this.showUsers = null;
     } else{
       this.showNavBar = true;
       // Check if there is a current user and redirect to the login screen if there isn't
       let currentUser: string | null = localStorage.getItem("currentUser");
       if (!currentUser){
         this.router.navigateByUrl("/login");
-        this.showUsers = false;
-      } else if (!this.showUsers){
+      } else if (this.showUsers == null){
         // Show the users nav link if the user is a super admin or group admin
-        this.dataService.getUserRole(currentUser).then((user: any) => {
-          if (user.role == "superAdmin" || user.role == "groupAdmin"){
-            this.showUsers = true;
-          }
+        this.dataService.checkUserAuthorised("groupAdmin").then((result: any) => {
+          this.showUsers = result.authorised;
         });
       }
     }
   }
 
   logOut(): void{
-    sessionStorage.removeItem("currentUser");
+    localStorage.removeItem("currentUser");
     this.router.navigateByUrl("/login");
     this.showUsers = false;
   }

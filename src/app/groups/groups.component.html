@@ -8,7 +8,7 @@
         <ng-container *ngFor="let group of Object.keys(authorisedChannels)">
             <tr style="padding-top:20px;">
                 <td>{{group}}</td>
-                <td>
+                <td *ngIf="isGroupAdmin">
                     <input type="submit" value="Manage Users">
                     <input type="submit" value="Delete" (click)="delete(group)">
                 </td>
@@ -19,11 +19,11 @@
                 <td>{{channel}}</td>
                 <td>
                     <input type="submit" value="Connect">
-                    <input type="submit" value="Manage Users">
-                    <input type="submit" value="Delete" (click)="delete(group, channel)">
+                    <input type="submit" value="Manage Users" *ngIf="isGroupAssis[group]">
+                    <input type="submit" value="Delete" (click)="delete(group, channel)" *ngIf="isGroupAdmin">
                 </td>
             </tr>
-            <tr style="padding-top:20px;">
+            <tr style="padding-top:20px;" *ngIf="isGroupAssis[group]">
                 <td></td>
                 <td></td>
                 <td><input type="text" id="{{group}}NewChannelInput"></td>
@@ -32,7 +32,7 @@
                 </td>
             </tr>
         </ng-container>
-        <tr style="padding-top:20px;">
+        <tr style="padding-top:20px;" *ngIf="isGroupAdmin">
             <td><input type="text" id="newGroupInput"></td>
             <td>
                 <input type="submit" value="Add" (click)="add(document.getElementById('newGroupInput').value)">

@@ -9,9 +9,6 @@ module.exports = function(app, dbData){
             let db = client.db(dbData.name);
             let collection = db.collection("users");
             collection.find({"name": userName}).toArray((err, user) => {
-                // Close the db since we have what we need from it
-                client.close();
-
                 // Lambda function for checking if the user is a group assistant of the supplied group
                 let checkGroupAssis = () => {
                     for (let groupAssisOf of (user[0].groupAssisFor)){
@@ -31,6 +28,7 @@ module.exports = function(app, dbData){
                 } else {
                     retVal = false;
                 }
+
                 client.close();
             });
         });
@@ -41,12 +39,15 @@ module.exports = function(app, dbData){
         return retVal;
     }
 
-    app.post("/checkUserAuthorised", function(req, res){
-        if (!req.body || !req.body.user){
+    app.post("/checkUserAuthorised", async function(req, res){
+        if (!req.body || !req.body.minRole || !req.body.user){
             res.sendStatus(400);
         }
 
-        res.send({"authorised" : checkUserAuthorised(req.body.user)});
+        // Get whether the user is authorised
+        let authorised = await checkUserAuthorised(req.body.minRole, req.body.user, req.body.groupName);
+
+        res.send({"authorised" : authorised});
     });
 
     return checkUserAuthorised;

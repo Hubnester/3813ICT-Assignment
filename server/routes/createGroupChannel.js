@@ -24,7 +24,7 @@ module.exports = function(app, dbData, checkUserAuthorised){
             // Create the channel if it's supplied, otherwise create the group
             if (req.body.channelName){
                 // Check if the channel already exists
-                collection.find({["channels."+req.body.channelName]: {"$exists" : true}}).count((err, count) => {
+                collection.find({"name": req.body.groupName, ["channels."+req.body.channelName]: {"$exists" : true}}).count((err, count) => {
                     if (count == 0){
                         // Create the new channel
                         collection.updateOne({"name": req.body.groupName}, [{"$set": {["channels."+req.body.channelName]: {"users" : [], "chat" : []}}}], (err, dbres) => {

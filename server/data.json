@@ -1,1 +1,1 @@
-{"users":{"super":{"email":"","role":"superAdmin","name":"super"},"group":{"email":"","role":"groupAssis","name":"group"},"user":{"email":"","role":"none","name":"user"}},"groups":{}}
+{"users":{"super":{"email":"","role":"superAdmin","name":"super"},"group":{"email":"","role":"groupAssis","name":"group"},"assis":{"email":"","role":"none","name":"assis"}, "user":{"email":"","role":"none","name":"user"}},"groups":{}}
