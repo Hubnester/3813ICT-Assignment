@@ -34,7 +34,7 @@ export class GroupsComponent implements OnInit {
     }
     // Get confimation from the user
     if (confirm(confirmationString)){
-      this.dataService.deleteGroupChannel(group, channel);
+      await this.dataService.deleteGroupChannel(group, channel);
       this.authorisedChannels = await this.dataService.getAuthorisedChannels();
     }
   }

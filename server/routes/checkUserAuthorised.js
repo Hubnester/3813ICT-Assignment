@@ -2,6 +2,7 @@ module.exports = function(app, dbData){
     // Function for getting the user role
     let checkUserAuthorised = async (minRole, userName, group = null) => {
         let retVal = undefined;
+        
         // Connect to the database
         dbData.MongoClient.connect(dbData.url, function(err, client){
             if (err) {throw err;}
@@ -35,7 +36,7 @@ module.exports = function(app, dbData){
         });
         // Wait for the the retVal to be gotten from the DB
         while (retVal == undefined){
-            await (new Promise(resolve => setTimeout(resolve, 100)));
+            await (new Promise(resolve => setTimeout(resolve, 1)));
         }
         return retVal;
     }

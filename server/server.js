@@ -32,8 +32,8 @@ function saveData(){
 
 var checkUserAuthorised = require("./routes/checkUserAuthorised.js")(app, dbData);
 
-require("./routes/deleteGroupChannel.js")(app, dbData, serverData, checkUserAuthorised, saveData);
-require("./routes/getAuthorisedChannels.js")(app, dbData, serverData, checkUserAuthorised)
+require("./routes/getAuthorisedChannels.js")(app, dbData, checkUserAuthorised)
+require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised, saveData);
 
 // NOT YET CONVERTED TO CHECK USER AUTH ROUTES
 

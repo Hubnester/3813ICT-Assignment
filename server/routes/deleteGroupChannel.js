@@ -1,27 +1,27 @@
-module.exports = function(app, dbData, data, checkUserAuthorised, saveData){
-    app.post("/deleteGroupChannel", function(req, res){
-        if (!req.body || !req.body.user || !req.body.groupName || !data.groups[req.body.groupName]){
+module.exports = function(app, dbData, checkUserAuthorised, saveData){
+    app.post("/deleteGroupChannel", async function(req, res){
+        if (!req.body || !req.body.user || !req.body.groupName){
             return res.sendStatus(400);
         }
 
         // Check if the supplied user is authorised to delete the group or channel
-        if (!checkUserAuthorised("groupAdmin", req.body.user)){
+        let isAuthorised = await checkUserAuthorised("groupAdmin", req.body.user);
+        if (!isAuthorised){
             return res.sendStatus(401);
         }
 
-        // Delete the channel if it's supplied, otherwise delete the group
-        if (req.body.channelName){
-            // Check if the group name was supplied and if the group and channel actually exists
-            if (data.groups[req.body.groupName].channels[req.body.channelName]){
-                delete data.groups[req.body.groupName].channels[req.body.channelName];
+        dbData.MongoClient.connect(dbData.url, async function(err, client){
+            if (err) {throw err;}
+            let db = client.db(dbData.name);
+            let collection = db.collection("groups");
+
+            // Delete the channel if it's supplied, otherwise delete the group
+            if (req.body.channelName){
+                collection.updateOne({"name": req.body.groupName}, [{"$unset": "channels."+req.body.channelName}]);
             } else {
-                return res.sendStatus(400);
+                collection.deleteOne({"name": req.body.groupName});
             }
-        // Check if the group name was supplied and if that group exists
-        } else {
-            delete data.groups[req.body.groupName];
-        }
-        saveData(data);
+        });
         
         res.send({});
     });
