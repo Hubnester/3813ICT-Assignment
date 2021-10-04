@@ -33,14 +33,13 @@ function saveData(){
 var checkUserAuthorised = require("./routes/checkUserAuthorised.js")(app, dbData);
 
 require("./routes/getAuthorisedChannels.js")(app, dbData, checkUserAuthorised)
-require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised, saveData);
+require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised);
+require("./routes/createGroupChannel.js")(app, dbData, checkUserAuthorised)
 
-// NOT YET CONVERTED TO CHECK USER AUTH ROUTES
+// NOT YET UPDATED ROUTES
 
 require("./routes/auth.js")(app, path, serverData);
 require("./routes/getUserRole.js")(app, path, serverData);
-require("./routes/createChannel.js")(app, path, serverData, saveData);
-require("./routes/createGroup.js")(app, path, serverData, saveData);
 require("./routes/getUsers.js")(app, path, serverData);
 require("./routes/updateUser.js")(app, path, serverData, saveData);
 require("./routes/deleteUser.js")(app, path, serverData, saveData);

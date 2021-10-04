@@ -13,9 +13,14 @@ export class DataService {
     return await this.backendService.post("/getAuthorisedChannels", {"user": localStorage.getItem("currentUser")});
   }
 
-  // Delete the specified channel from the specified group
+  // Delete the specified channel or group
   async deleteGroupChannel(group: string, channel: string | null = null){
     return await this.backendService.post("/deleteGroupChannel", {"groupName": group, "channelName": channel, "user": localStorage.getItem("currentUser")});
+  }
+
+  // Create a new channel or group
+  async createGroupChannel(group: string, channel: string | null){
+    return await this.backendService.post("/createGroupChannel", {"groupName": group, "channelName": channel, "user": localStorage.getItem("currentUser")});
   }
 
   // FUNCTIONS NOT YET EDITED
@@ -23,16 +28,6 @@ export class DataService {
   // Get the role of the user
   async getUserRole(currentUser: string){
     return await this.backendService.post("/getUserRole", {"user" : currentUser});
-  }
-
-  // Create a new channel in the specified group
-  async createChannel(groupName: string, channelName: string){
-    return await this.backendService.post("/createChannel", {"groupName": groupName, "channelName": channelName});
-  }
-
-  // Create a new group
-  async createGroup(groupName: string){
-    return await this.backendService.post("/createGroup", {"groupName": groupName});
   }
 
   // Get the users

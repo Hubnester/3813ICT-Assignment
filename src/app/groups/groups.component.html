@@ -18,7 +18,7 @@
                 <td></td>
                 <td>{{channel}}</td>
                 <td>
-                    <input type="submit" value="Join">
+                    <input type="submit" value="Connect">
                     <input type="submit" value="Manage Users">
                     <input type="submit" value="Delete" (click)="delete(group, channel)">
                 </td>
@@ -26,16 +26,16 @@
             <tr style="padding-top:20px;">
                 <td></td>
                 <td></td>
-                <td><input type="text"></td>
+                <td><input type="text" id="{{group}}NewChannelInput"></td>
                 <td>
-                    <input type="submit" value="Add">
+                    <input type="submit" value="Add" (click)="add(group, group+'NewChannelInput')">
                 </td>
             </tr>
         </ng-container>
         <tr style="padding-top:20px;">
-            <td><input type="text"></td>
+            <td><input type="text" id="newGroupInput"></td>
             <td>
-                <input type="submit" value="Add">
+                <input type="submit" value="Add" (click)="add(document.getElementById('newGroupInput').value)">
             </td>
         </tr>
     </table>

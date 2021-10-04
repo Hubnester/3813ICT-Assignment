@@ -1,4 +1,4 @@
-module.exports = function(app, dbData, checkUserAuthorised, saveData){
+module.exports = function(app, dbData, checkUserAuthorised){
     app.post("/deleteGroupChannel", async function(req, res){
         if (!req.body || !req.body.user || !req.body.groupName){
             return res.sendStatus(400);
@@ -10,6 +10,8 @@ module.exports = function(app, dbData, checkUserAuthorised, saveData){
             return res.sendStatus(401);
         }
 
+        let dbDone = undefined;
+
         dbData.MongoClient.connect(dbData.url, async function(err, client){
             if (err) {throw err;}
             let db = client.db(dbData.name);
@@ -17,12 +19,12 @@ module.exports = function(app, dbData, checkUserAuthorised, saveData){
 
             // Delete the channel if it's supplied, otherwise delete the group
             if (req.body.channelName){
-                collection.updateOne({"name": req.body.groupName}, [{"$unset": "channels."+req.body.channelName}]);
+                await collection.updateOne({"name": req.body.groupName}, [{"$unset": "channels."+req.body.channelName}]);
             } else {
-                collection.deleteOne({"name": req.body.groupName});
+                await collection.deleteOne({"name": req.body.groupName});
             }
+
+            res.send({});
         });
-        
-        res.send({});
     });
 }

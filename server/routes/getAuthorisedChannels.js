@@ -4,8 +4,6 @@ module.exports = function(app, dbData, checkUserAuthorised){
             return res.sendStatus(400);
         }
 
-        let retVal = undefined;
-
         // Connect to the database
         dbData.MongoClient.connect(dbData.url, async function(err, client){
             if (err) {throw err;}
@@ -51,15 +49,9 @@ module.exports = function(app, dbData, checkUserAuthorised){
                     }
                 }
 
-                retVal = authorisedChannels;
+                res.send(authorisedChannels);
                 client.close();
             });
         });
-
-        // Wait for the the retVal to be gotten from the DB
-        while (retVal == undefined){
-            await (new Promise(resolve => setTimeout(resolve, 1)));
-        }
-        res.send(retVal);
     });
 }

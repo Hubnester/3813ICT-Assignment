@@ -8,8 +8,9 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
-  // To allow the html to access the Object functions
+  // To allow the html to access these functions
   Object: any = Object;
+  document: any = document;
   // Variables for handling the users role
   isSuperAdmin: boolean = false;
   isGroupAdmin: boolean = false;
@@ -35,7 +36,25 @@ export class GroupsComponent implements OnInit {
     // Get confimation from the user
     if (confirm(confirmationString)){
       await this.dataService.deleteGroupChannel(group, channel);
+      // Reset the channel list
       this.authorisedChannels = await this.dataService.getAuthorisedChannels();
     }
+  }
+
+  async add(group: string, channelInputId: string | null = null){
+    let channel: string | null = null;
+    let element: any = undefined;
+    // Ge the name of the channel from the channel input if the id was supplied
+    if (channelInputId){
+      element = document.getElementById(channelInputId);
+      channel = element.value;
+    } else{
+      element = document.getElementById("newGroupInput");
+    }
+    await this.dataService.createGroupChannel(group, channel);
+    // Reset the text box for the added group or channel
+    element.value = "";
+    // Reset the channel list
+    this.authorisedChannels = await this.dataService.getAuthorisedChannels();
   }
 }

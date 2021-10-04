@@ -14,7 +14,7 @@ module.exports = function(app, dbData){
 
                 // Lambda function for checking if the user is a group assistant of the supplied group
                 let checkGroupAssis = () => {
-                    for (let groupAssisOf of user[0].groupAssisFor){
+                    for (let groupAssisOf of (user[0].groupAssisFor)){
                         if (group == groupAssisOf){
                             return true;
                         }

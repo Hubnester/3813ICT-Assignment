@@ -158,15 +158,15 @@ export class HomeComponent implements OnInit {
   }
 
   async createGroup(): Promise<void>{
-    var retVal: any = await this.dataService.createGroup(this.newGroupName)
-    if (retVal.alreadyExists){
-      this.groupNameAlreadyExists = true;
-    } else{
+    //var retVal: any = await this.dataService.createGroup(this.newGroupName)
+    //if (retVal.alreadyExists){
+      //this.groupNameAlreadyExists = true;
+    //} else{
       // Refresh the group list
-      this.showGroups = false;
-      this.toggleGroups();
-      this.newGroupName = "";
-    }
+    //  this.showGroups = false;
+    //  this.toggleGroups();
+    //  this.newGroupName = "";
+    //}
   }
 
   async toggleGroupEdit(groupName:string){
@@ -212,15 +212,15 @@ export class HomeComponent implements OnInit {
   }
 
   async createChannel(groupName:string): Promise<void>{
-    var retVal: any = await this.dataService.createChannel(groupName, this.newChannelNames[groupName])
-    if (retVal.alreadyExists){
-      this.channelNameAlreadyExists[groupName] = true;
-    } else{
-      // Refresh the channel list
-      this.showChannels[groupName] = false;
-      this.toggleChannels(groupName);
-      this.newChannelNames[groupName] = "";
-    }
+    //var retVal: any = await this.dataService.createChannel(groupName, this.newChannelNames[groupName])
+    //if (retVal.alreadyExists){
+    //  this.channelNameAlreadyExists[groupName] = true;
+    //} else{
+    //  // Refresh the channel list
+    //  this.showChannels[groupName] = false;
+    //  this.toggleChannels(groupName);
+    //  this.newChannelNames[groupName] = "";
+    //}
   }
 
   async selectChannel(): Promise<void>{
