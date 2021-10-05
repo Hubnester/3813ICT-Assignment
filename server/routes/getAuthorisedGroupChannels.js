@@ -49,7 +49,7 @@ module.exports = function(app, dbData, checkUserAuthorised){
                     }
                 }
 
-                res.send(authorisedChannels);
+                res.send(sortObject(authorisedChannels));
                 client.close();
             });
         });

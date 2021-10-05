@@ -30,13 +30,25 @@ function saveData(){
 	fs.writeFile("./data.json", JSON.stringify(serverData), err => {if (err) throw err});
 }
 
+// Sort an object based on it's keys
+sortObject = (oldObj) => {
+	let keys = Object.keys(oldObj);
+	keys.sort();
+	let newObj = {};
+	for (let key of keys){
+		newObj[key] = oldObj[key];
+	}
+	return newObj;
+}
+
 var checkUserAuthorised = require("./routes/checkUserAuthorised.js")(app, dbData);
 
 require("./routes/login.js")(app, dbData);
-require("./routes/getAuthorisedGroupChannels.js")(app, dbData, checkUserAuthorised);
+require("./routes/getAuthorisedGroupChannels.js")(app, dbData, checkUserAuthorised, sortObject);
 require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised);
 require("./routes/createGroupChannel.js")(app, dbData, checkUserAuthorised);
-require("./routes/getAuthorisedGroupChannelUsers")(app, dbData, checkUserAuthorised);
+require("./routes/getAuthorisedGroupChannelUsers")(app, dbData, checkUserAuthorised, sortObject);
+require("./routes/addRemoveGroupChannelUser")(app, dbData, checkUserAuthorised);
 
 // NOT YET UPDATED ROUTES
 
@@ -44,8 +56,4 @@ require("./routes/getUserRole.js")(app, path, serverData);
 require("./routes/getUsers.js")(app, path, serverData);
 require("./routes/updateUser.js")(app, path, serverData, saveData);
 require("./routes/deleteUser.js")(app, path, serverData, saveData);
-require("./routes/addRemoveGroupUser.js")(app, path, serverData, saveData);
-require("./routes/getGroupAssis.js")(app, path, serverData);
 require("./routes/addRemoveGroupAssis.js")(app, path, serverData, saveData);
-require("./routes/getGroupUsers.js")(app, path, serverData);
-require("./routes/addRemoveChannelUser.js")(app, path, serverData, saveData);

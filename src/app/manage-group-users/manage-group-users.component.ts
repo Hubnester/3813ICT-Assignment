@@ -46,6 +46,12 @@ export class ManageGroupUsersComponent implements OnInit {
       if (element){
         element.disabled = !this.users[user].authorised;
       }
+
+      // Disable the remove from group button if the the user is a group assis
+      element = document.getElementById("groupRemove"+user);
+      if (element){
+        element.disabled = this.users[user].groupAssis;
+      }
     }
   }
 

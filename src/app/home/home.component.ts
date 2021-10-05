@@ -329,29 +329,29 @@ export class HomeComponent implements OnInit {
   }
 
   async addRemoveGroupUser(groupName:string, userName:string, remove: boolean){
-    await this.dataService.addRemoveGroupUser(groupName, userName, remove);
+    //await this.dataService.addRemoveGroupUser(groupName, userName, remove);
     // Refresh the add/remove group user list
-    this.showAddRemoveGroupUsers[groupName] = false;
-    this.toggleAddRemoveGroupUsers(groupName);
+    //this.showAddRemoveGroupUsers[groupName] = false;
+    //this.toggleAddRemoveGroupUsers(groupName);
   }
 
   async toggleAddRemoveGroupAssis(groupName: string){
-    this.showAddRemoveGroupAssis[groupName] = !this.showAddRemoveGroupAssis[groupName];
-    var users: any = await this.dataService.getUsers();
-    var groupAssis: any = await this.dataService.getGroupAssis(groupName);
-    this.groupAssis[groupName] = [];
-    for (var i in users){
-      if (groupAssis[users[i].name]){
-        this.groupAssis[groupName][i] = {"name" : users[i].name, "assis": true};
-      } else{
-        this.groupAssis[groupName][i] = {"name" : users[i].name, "assis": false};
-      }
-    }
-    if (this.showAddRemoveGroupAssis[groupName]){
-      this.addRemoveGroupAssisArrows[groupName] = DOWNARROW;
-    } else{
-      this.addRemoveGroupAssisArrows[groupName] = SIDEARROW;
-    }
+    //this.showAddRemoveGroupAssis[groupName] = !this.showAddRemoveGroupAssis[groupName];
+    //var users: any = await this.dataService.getUsers();
+    //var groupAssis: any = await this.dataService.getGroupAssis(groupName);
+    //this.groupAssis[groupName] = [];
+    //for (var i in users){
+    //  if (groupAssis[users[i].name]){
+    //    this.groupAssis[groupName][i] = {"name" : users[i].name, "assis": true};
+    //  } else{
+    //    this.groupAssis[groupName][i] = {"name" : users[i].name, "assis": false};
+    //  }
+    //}
+    //if (this.showAddRemoveGroupAssis[groupName]){
+    //  this.addRemoveGroupAssisArrows[groupName] = DOWNARROW;
+    //} else{
+    //  this.addRemoveGroupAssisArrows[groupName] = SIDEARROW;
+    //}
   }
 
   async addRemoveGroupAssis(groupName:string, userName:string, remove: boolean){
@@ -381,9 +381,9 @@ export class HomeComponent implements OnInit {
   }
 
   async addRemoveChannelUser(groupName:string, channelName: string, userName:string, remove: boolean){
-    await this.dataService.addRemoveChannelUser(groupName, channelName, userName, remove);
+    //await this.dataService.addRemoveChannelUser(groupName, channelName, userName, remove);
     // Refresh the add/remove group user list
-    this.showAddRemoveChannelUsers[groupName][channelName] = false;
-    this.toggleAddRemoveChannelUsers(groupName, channelName);
+    //this.showAddRemoveChannelUsers[groupName][channelName] = false;
+    //this.toggleAddRemoveChannelUsers(groupName, channelName);
   }
 }

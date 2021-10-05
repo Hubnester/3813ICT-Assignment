@@ -65,28 +65,8 @@ export class DataService {
     return await this.backendService.post("/deleteUser", {"user": userName});
   }
 
-  // Add or remove a user from a group
-  async addRemoveGroupUser(groupName: string, userName: string, remove: boolean){
-    return await this.backendService.post("/addRemoveGroupUser", {"group": groupName, "user": userName, "remove": remove});
-  }
-
-  // Get the group assistants for a group in object format
-  async getGroupAssis(groupName: string){
-    return await this.backendService.post("/getGroupAssis", {"group": groupName});
-  }
-
   // Add or remove a user as a group assistant
   async addRemoveGroupAssis(groupName: string, userName: string, remove: boolean){
     return await this.backendService.post("/addRemoveGroupAssis", {"group": groupName, "user": userName, "remove": remove});
-  }
-
-  // Get the members for a group
-  async getGroupUsers(groupName: string){
-    return await this.backendService.post("/getGroupUsers", {"group": groupName});
-  }
-
-  // Add or remove a user from a channel
-  async addRemoveChannelUser(groupName: string, channelName: string, userName: string, remove: boolean){
-    return await this.backendService.post("/addRemoveChannelUser", {"group": groupName, "channel": channelName, "user": userName, "remove": remove});
   }
 }

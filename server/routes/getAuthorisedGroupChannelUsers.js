@@ -1,4 +1,4 @@
-module.exports = function(app, dbData, checkUserAuthorised){
+module.exports = function(app, dbData, checkUserAuthorised, sortObject){
     app.post("/getAuthorisedGroupChannelUsers", async function(req, res){
         if (!req.body || !req.body.user || !req.body.groupName){
             return res.sendStatus(400);
@@ -28,6 +28,7 @@ module.exports = function(app, dbData, checkUserAuthorised){
                     groupCollection.find({"name": req.body.groupName}).toArray(async (err, group) => {
                         // Check if the group doesn't exist
                         if (!group[0]){
+                            client.close();
                             return res.sendStatus(400);
                         }
 
@@ -70,7 +71,9 @@ module.exports = function(app, dbData, checkUserAuthorised){
                 while (dbFinished < users.length){
                     await (new Promise(resolve => setTimeout(resolve, 1)));
                 }
-                res.send(authorisedUsers);
+
+                res.send(sortObject(authorisedUsers));
+                client.close();
             });
         });
     });

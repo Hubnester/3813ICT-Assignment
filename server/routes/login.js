@@ -16,6 +16,7 @@ module.exports = function(app, dbData){
                 } else {
                     res.send({});
                 }
+                client.close();
             });
         });
     });
