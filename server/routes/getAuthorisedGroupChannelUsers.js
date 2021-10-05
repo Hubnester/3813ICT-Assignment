@@ -32,24 +32,34 @@ module.exports = function(app, dbData, checkUserAuthorised){
                         }
 
                         // Loop through the authorised users of the group to see if any matches the current user
-                        for (groupUser in group[0].users){
+                        for (groupUser of group[0].users){
                             if (user.name == groupUser){
                                 userAuthorisedGroup = true;
+                                break;
                             }
                         }
                         // Add the user to the authorised users if they are authorised or the requester is a group admin
                         if (isGroupAdmin){
-                            let isUserGroupAssis = await checkUserAuthorised("groupAssis", user, req.body.groupName);
+                            let isUserGroupAssis = await checkUserAuthorised("groupAssisExclusive", user.name, req.body.groupName);
                             authorisedUsers[user.name] = {"authorised" : userAuthorisedGroup, "groupAssis": isUserGroupAssis, "channels" : {}};
                         } else if (userAuthorisedGroup){
                             authorisedUsers[user.name] = {"authorised" : true, "channels" : {}};
                         } else {
+                            dbFinished++;
                             return;
                         }
 
                         // Loop through the channels and see if the user is authorised
-                        for (channel in Object.keys(group[0].channels)){
+                        for (channel of Object.keys(group[0].channels)){
                             let userAuthorisedChannel = false;
+                            // Loop through the authorised users of the group
+                            for (groupUser of group[0].channels[channel].users){
+                                if (user.name == groupUser){
+                                    userAuthorisedChannel = true;
+                                    break;
+                                }
+                            }
+                            authorisedUsers[user.name].channels[channel] = userAuthorisedChannel;
                         }
 
                         dbFinished++;

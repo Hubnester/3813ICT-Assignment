@@ -32,7 +32,9 @@ module.exports = function(app, dbData){
                     retVal = true;
                 } else if (group && minRole == "groupAssis" && (user[0].role == "superAdmin" || user[0].role == "groupAdmin" || checkGroupAssis())){
                     retVal = true;
-                } else {
+                } else if (group && minRole == "groupAssisExclusive" && checkGroupAssis()){
+                    retVal = true;
+                }else {
                     retVal = false;
                 }
 

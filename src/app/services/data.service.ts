@@ -38,6 +38,11 @@ export class DataService {
     return await this.backendService.post("/getAuthorisedGroupChannelUsers", {"groupName": group, "user": localStorage.getItem("currentUser")});
   }
 
+  // Add or remove a user from a group or channel
+  async addRemoveGroupChannelUser(userName: string, remove: boolean, group: string, channel: string | null = null){
+    return await this.backendService.post("/addRemoveGroupChannelUser", {"groupName": group, "channelName": channel, "userName": userName, "remove": remove, "user": localStorage.getItem("currentUser")});
+  }
+
   // FUNCTIONS NOT YET EDITED
 
   // Get the role of the user
