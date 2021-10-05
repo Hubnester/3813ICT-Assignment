@@ -18,6 +18,7 @@ export class ManageGroupUsersComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.group = this.route.snapshot.params.group;
     this.users = await this.dataService.getAuthorisedGroupChannelUsers(this.group);
+    console.log(this.users);
   }
 
 }

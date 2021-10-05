@@ -36,7 +36,7 @@ require("./routes/login.js")(app, dbData);
 require("./routes/getAuthorisedGroupChannels.js")(app, dbData, checkUserAuthorised);
 require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised);
 require("./routes/createGroupChannel.js")(app, dbData, checkUserAuthorised);
-require("./routes/getAthorisedGroupChannelUsers")(app, dbData, checkUserAuthorised);
+require("./routes/getAuthorisedGroupChannelUsers")(app, dbData, checkUserAuthorised);
 
 // NOT YET UPDATED ROUTES
 

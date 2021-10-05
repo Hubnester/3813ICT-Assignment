@@ -9,6 +9,13 @@ module.exports = function(app, dbData){
             let db = client.db(dbData.name);
             let collection = db.collection("users");
             collection.find({"name": username}).toArray((err, user) => {
+                // Check if the user doesn't exist
+                if (!user[0]){
+                    client.close();
+                    retVal = false;
+                    return;
+                }
+
                 // Lambda function for checking if the user is a group assistant of the supplied group
                 let checkGroupAssis = () => {
                     for (let groupAssisOf of (user[0].groupAssisFor)){
