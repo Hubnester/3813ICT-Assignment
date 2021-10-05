@@ -22,8 +22,8 @@ module.exports = function(app, dbData){
                         if (group == groupAssisOf){
                             return true;
                         }
-                        return false;
                     }
+                    return false;
                 }
                 // Check if the user meets the min role requirement
                 if (minRole == "superAdmin" && user[0].role == "superAdmin"){

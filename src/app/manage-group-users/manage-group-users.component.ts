@@ -28,6 +28,16 @@ export class ManageGroupUsersComponent implements OnInit {
   async refreshData(){
     this.users = await this.dataService.getAuthorisedGroupChannelUsers(this.group);
     await (new Promise(resolve => setTimeout(resolve, 1)));
+    // Lambda function for counting how many channels are authorised or not
+    let countAuthorisedChannels = (user: string, authState: boolean) => {
+      let count = 0;
+      for (let channel in this.users[user].channels){
+        if (this.users[user].channels[channel] == authState){
+          count++;
+        }
+      }
+      return count;
+    }
     for (let user in this.users){
       // Disable the group assis add/remove button if the user isn't a member of the group
       let element: any = document.getElementById("groupAssis"+user);
@@ -38,13 +48,13 @@ export class ManageGroupUsersComponent implements OnInit {
       // Disable the add channel to button if the user isn't a member of the group
       element = document.getElementById("channelAdd"+user);
       if (element){
-        element.disabled = !this.users[user].authorised;
+        element.disabled = !this.users[user].authorised || (countAuthorisedChannels(user, false) < 1);
       }
 
       // Disable the remove from channel button if the user isn't a member of the group
       element = document.getElementById("channelRemove"+user);
       if (element){
-        element.disabled = !this.users[user].authorised;
+        element.disabled = !this.users[user].authorised || (countAuthorisedChannels(user, true) < 1);
       }
 
       // Disable the remove from group button if the the user is a group assis
@@ -73,8 +83,14 @@ export class ManageGroupUsersComponent implements OnInit {
   }
 
   // Add or remove a user from a group or channel
-  async addRemoveGroupChannelUser(userName: string, remove: boolean, group: string, channel: string | null = null){
-    await this.dataService.addRemoveGroupChannelUser(userName, remove, group, channel);
+  async addRemoveGroupChannelUser(userName: string, remove: boolean, channel: string | null = null){
+    await this.dataService.addRemoveGroupChannelUser(userName, remove, this.group, channel);
+    this.refreshData();
+  }
+
+  // Add or remove a group assis
+  async addRemoveGroupAssis(userName: string, remove: boolean){
+    await this.dataService.addRemoveGroupAssis(userName, remove, this.group);
     this.refreshData();
   }
 

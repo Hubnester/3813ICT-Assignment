@@ -49,6 +49,7 @@ require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised);
 require("./routes/createGroupChannel.js")(app, dbData, checkUserAuthorised);
 require("./routes/getAuthorisedGroupChannelUsers")(app, dbData, checkUserAuthorised, sortObject);
 require("./routes/addRemoveGroupChannelUser")(app, dbData, checkUserAuthorised);
+require("./routes/addRemoveGroupAssis.js")(app, dbData, checkUserAuthorised);
 
 // NOT YET UPDATED ROUTES
 
@@ -56,4 +57,3 @@ require("./routes/getUserRole.js")(app, path, serverData);
 require("./routes/getUsers.js")(app, path, serverData);
 require("./routes/updateUser.js")(app, path, serverData, saveData);
 require("./routes/deleteUser.js")(app, path, serverData, saveData);
-require("./routes/addRemoveGroupAssis.js")(app, path, serverData, saveData);

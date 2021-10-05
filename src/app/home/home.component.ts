@@ -355,10 +355,10 @@ export class HomeComponent implements OnInit {
   }
 
   async addRemoveGroupAssis(groupName:string, userName:string, remove: boolean){
-    await this.dataService.addRemoveGroupAssis(groupName, userName, remove);
+    //await this.dataService.addRemoveGroupAssis(groupName, userName, remove);
     // Refresh the add/remove group user list
-    this.showAddRemoveGroupAssis[groupName] = false;
-    this.toggleAddRemoveGroupAssis(groupName);
+    //this.showAddRemoveGroupAssis[groupName] = false;
+    //this.toggleAddRemoveGroupAssis(groupName);
   }
 
   async toggleAddRemoveChannelUsers(groupName: string, channelName: string){

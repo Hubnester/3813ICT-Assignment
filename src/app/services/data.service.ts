@@ -43,6 +43,11 @@ export class DataService {
     return await this.backendService.post("/addRemoveGroupChannelUser", {"groupName": group, "channelName": channel, "userName": userName, "remove": remove, "user": localStorage.getItem("currentUser")});
   }
 
+  // Add or remove a user as a group assistant
+  async addRemoveGroupAssis(userName: string, remove: boolean, groupName: string){
+    return await this.backendService.post("/addRemoveGroupAssis", {"groupName": groupName, "userName": userName, "remove": remove, "user": localStorage.getItem("currentUser")});
+  }
+
   // FUNCTIONS NOT YET EDITED
 
   // Get the role of the user
@@ -63,10 +68,5 @@ export class DataService {
   // Update or create a new user
   async deleteUser(userName: string){
     return await this.backendService.post("/deleteUser", {"user": userName});
-  }
-
-  // Add or remove a user as a group assistant
-  async addRemoveGroupAssis(groupName: string, userName: string, remove: boolean){
-    return await this.backendService.post("/addRemoveGroupAssis", {"group": groupName, "user": userName, "remove": remove});
   }
 }
