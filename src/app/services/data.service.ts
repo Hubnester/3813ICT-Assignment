@@ -8,13 +8,18 @@ export class DataService {
 
   constructor( private backendService: BackendService ) { }
 
+  // Attmept to log in the suer
+  async login(loginDetails: object){
+    return await this.backendService.post("/login", loginDetails)
+  }
+
   // Check if the user meets the supplied minimum authorisation
-  async checkUserAuthorised(minRole: string, group: string | null = null){
-    return await this.backendService.post("/checkUserAuthorised", {"minRole": minRole, "groupName": group, "user": localStorage.getItem("currentUser")})
+  async checkUserAuthorised(minRole: string, group: string | null = null, user: string | null = localStorage.getItem("currentUser")){
+    return await this.backendService.post("/checkUserAuthorised", {"minRole": minRole, "groupName": group, "user": user})
   }
 
   // Get the channels in the groups the user is authorised to see
-  async getAuthorisedChannels(): Promise<object>{
+  async getAuthorisedGroupChannels(){
     return await this.backendService.post("/getAuthorisedChannels", {"user": localStorage.getItem("currentUser")});
   }
 
@@ -26,6 +31,11 @@ export class DataService {
   // Create a new channel or group
   async createGroupChannel(group: string, channel: string | null){
     return await this.backendService.post("/createGroupChannel", {"groupName": group, "channelName": channel, "user": localStorage.getItem("currentUser")});
+  }
+
+  // Get a list of users that says wether they are authorised to access the group and its channels
+  async getAuthorisedGroupChannelUsers(group: string){
+    return await this.backendService.post("/getAuthorisedGroupChannelUsers", {"groupName": group, "user": localStorage.getItem("currentUser")});
   }
 
   // FUNCTIONS NOT YET EDITED
@@ -50,11 +60,6 @@ export class DataService {
     return await this.backendService.post("/deleteUser", {"user": userName});
   }
 
-  // Get the authorised users for a group in object format
-  async getAuthorisedGroupUsers(groupName: string){
-    return await this.backendService.post("/getAuthorisedGroupUsers", {"group": groupName});
-  }
-
   // Add or remove a user from a group
   async addRemoveGroupUser(groupName: string, userName: string, remove: boolean){
     return await this.backendService.post("/addRemoveGroupUser", {"group": groupName, "user": userName, "remove": remove});
@@ -73,11 +78,6 @@ export class DataService {
   // Get the members for a group
   async getGroupUsers(groupName: string){
     return await this.backendService.post("/getGroupUsers", {"group": groupName});
-  }
-
-  // Get the authorised users for a channel in object format
-  async getAuthorisedChannelUsers(groupName: string, channelName: string){
-    return await this.backendService.post("/getAuthorisedChannelUsers", {"group": groupName, "channel" : channelName});
   }
 
   // Add or remove a user from a channel

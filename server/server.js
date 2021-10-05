@@ -32,21 +32,20 @@ function saveData(){
 
 var checkUserAuthorised = require("./routes/checkUserAuthorised.js")(app, dbData);
 
-require("./routes/getAuthorisedChannels.js")(app, dbData, checkUserAuthorised)
+require("./routes/login.js")(app, dbData);
+require("./routes/getAuthorisedGroupChannels.js")(app, dbData, checkUserAuthorised);
 require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised);
-require("./routes/createGroupChannel.js")(app, dbData, checkUserAuthorised)
+require("./routes/createGroupChannel.js")(app, dbData, checkUserAuthorised);
+require("./routes/getAthorisedGroupChannelUsers")(app, dbData, checkUserAuthorised);
 
 // NOT YET UPDATED ROUTES
 
-require("./routes/auth.js")(app, path, serverData);
 require("./routes/getUserRole.js")(app, path, serverData);
 require("./routes/getUsers.js")(app, path, serverData);
 require("./routes/updateUser.js")(app, path, serverData, saveData);
 require("./routes/deleteUser.js")(app, path, serverData, saveData);
-require("./routes/getAuthorisedGroupUsers.js")(app, path, serverData);
 require("./routes/addRemoveGroupUser.js")(app, path, serverData, saveData);
 require("./routes/getGroupAssis.js")(app, path, serverData);
 require("./routes/addRemoveGroupAssis.js")(app, path, serverData, saveData);
 require("./routes/getGroupUsers.js")(app, path, serverData);
-require("./routes/getAuthorisedChannelUsers.js")(app, path, serverData);
 require("./routes/addRemoveChannelUser.js")(app, path, serverData, saveData);

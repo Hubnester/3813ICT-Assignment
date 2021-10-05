@@ -21,7 +21,7 @@ export class GroupsComponent implements OnInit {
   constructor(private router: Router, private dataService: DataService) { }
 
   async ngOnInit(): Promise<void> {
-    this.authorisedChannels = await this.dataService.getAuthorisedChannels();
+    this.authorisedChannels = await this.dataService.getAuthorisedGroupChannels();
     this.isSuperAdmin = (await this.dataService.checkUserAuthorised("superAdmin")).authorised;
     this.isGroupAdmin = (await this.dataService.checkUserAuthorised("groupAdmin")).authorised;
     for (let group in this.authorisedChannels){
@@ -42,7 +42,7 @@ export class GroupsComponent implements OnInit {
     if (confirm(confirmationString)){
       await this.dataService.deleteGroupChannel(group, channel);
       // Reset the channel list
-      this.authorisedChannels = await this.dataService.getAuthorisedChannels();
+      this.authorisedChannels = await this.dataService.getAuthorisedGroupChannels();
     }
   }
 
@@ -60,6 +60,6 @@ export class GroupsComponent implements OnInit {
     // Reset the text box for the added group or channel
     element.value = "";
     // Reset the channel list
-    this.authorisedChannels = await this.dataService.getAuthorisedChannels();
+    this.authorisedChannels = await this.dataService.getAuthorisedGroupChannels();
   }
 }

@@ -10,6 +10,7 @@ import { HomeComponent } from './home/home.component';
 import { UsersComponent } from './users/users.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GroupsComponent } from './groups/groups.component';
+import { ManageGroupUsersComponent } from './manage-group-users/manage-group-users.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { GroupsComponent } from './groups/groups.component';
     HomeComponent,
     UsersComponent,
     ProfileComponent,
-    GroupsComponent
+    GroupsComponent,
+    ManageGroupUsersComponent
   ],
   imports: [
     BrowserModule,

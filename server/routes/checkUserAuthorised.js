@@ -1,6 +1,6 @@
 module.exports = function(app, dbData){
     // Function for getting the user role
-    let checkUserAuthorised = async (minRole, userName, group = null) => {
+    let checkUserAuthorised = async (minRole, username, group = null) => {
         let retVal = undefined;
         
         // Connect to the database
@@ -8,7 +8,7 @@ module.exports = function(app, dbData){
             if (err) {throw err;}
             let db = client.db(dbData.name);
             let collection = db.collection("users");
-            collection.find({"name": userName}).toArray((err, user) => {
+            collection.find({"name": username}).toArray((err, user) => {
                 // Lambda function for checking if the user is a group assistant of the supplied group
                 let checkGroupAssis = () => {
                     for (let groupAssisOf of (user[0].groupAssisFor)){

@@ -310,22 +310,22 @@ export class HomeComponent implements OnInit {
   }
 
   async toggleAddRemoveGroupUsers(groupName: string){
-    this.showAddRemoveGroupUsers[groupName] = !this.showAddRemoveGroupUsers[groupName];
-    var users: any = await this.dataService.getUsers();
-    var authorisedUsers: any = await this.dataService.getAuthorisedGroupUsers(groupName);
-    this.authorisedGroupUsers[groupName] = [];
-    for (var i in users){
-      if (authorisedUsers[users[i].name]){
-        this.authorisedGroupUsers[groupName][i] = {"name" : users[i].name, "authorised": true};
-      } else{
-        this.authorisedGroupUsers[groupName][i] = {"name" : users[i].name, "authorised": false};
-      }
-    }
-    if (this.showAddRemoveGroupUsers[groupName]){
-      this.addRemoveGroupUserArrows[groupName] = DOWNARROW;
-    } else{
-      this.addRemoveGroupUserArrows[groupName] = SIDEARROW;
-    }
+    //this.showAddRemoveGroupUsers[groupName] = !this.showAddRemoveGroupUsers[groupName];
+    //var users: any = await this.dataService.getUsers();
+    //var authorisedUsers: any = await this.dataService.getAuthorisedGroupUsers(groupName);
+    //this.authorisedGroupUsers[groupName] = [];
+    //for (var i in users){
+    //  if (authorisedUsers[users[i].name]){
+    //    this.authorisedGroupUsers[groupName][i] = {"name" : users[i].name, "authorised": true};
+    //  } else{
+    //    this.authorisedGroupUsers[groupName][i] = {"name" : users[i].name, "authorised": false};
+    //  }
+    //}
+    //if (this.showAddRemoveGroupUsers[groupName]){
+    //  this.addRemoveGroupUserArrows[groupName] = DOWNARROW;
+    //} else{
+    //  this.addRemoveGroupUserArrows[groupName] = SIDEARROW;
+    //}
   }
 
   async addRemoveGroupUser(groupName:string, userName:string, remove: boolean){
@@ -362,22 +362,22 @@ export class HomeComponent implements OnInit {
   }
 
   async toggleAddRemoveChannelUsers(groupName: string, channelName: string){
-    this.showAddRemoveChannelUsers[groupName][channelName] = !this.showAddRemoveChannelUsers[groupName][channelName];
-    var users: any = await this.dataService.getGroupUsers(groupName);
-    var authorisedUsers: any = await this.dataService.getAuthorisedChannelUsers(groupName, channelName);
-    this.authorisedChannelUsers[groupName][channelName] = [];
-    for (var i in users){
-      if (authorisedUsers[users[i].name]){
-        this.authorisedChannelUsers[groupName][channelName][i] = {"name" : users[i].name, "authorised": true};
-      } else{
-        this.authorisedChannelUsers[groupName][channelName][i] = {"name" : users[i].name, "authorised": false};
-      }
-    }
-    if (this.showAddRemoveChannelUsers[groupName][channelName]){
-      this.addRemoveChannelUserArrows[groupName][channelName] = DOWNARROW;
-    } else{
-      this.addRemoveChannelUserArrows[groupName][channelName] = SIDEARROW;
-    }
+    //this.showAddRemoveChannelUsers[groupName][channelName] = !this.showAddRemoveChannelUsers[groupName][channelName];
+    //var users: any = await this.dataService.getGroupUsers(groupName);
+    //var authorisedUsers: any = await this.dataService.getAuthorisedChannelUsers(groupName, channelName);
+    //this.authorisedChannelUsers[groupName][channelName] = [];
+    //for (var i in users){
+    //  if (authorisedUsers[users[i].name]){
+    //    this.authorisedChannelUsers[groupName][channelName][i] = {"name" : users[i].name, "authorised": true};
+    //  } else{
+    //    this.authorisedChannelUsers[groupName][channelName][i] = {"name" : users[i].name, "authorised": false};
+    //  }
+    //}
+    //if (this.showAddRemoveChannelUsers[groupName][channelName]){
+    //  this.addRemoveChannelUserArrows[groupName][channelName] = DOWNARROW;
+    //} else{
+    //  this.addRemoveChannelUserArrows[groupName][channelName] = SIDEARROW;
+    //}
   }
 
   async addRemoveChannelUser(groupName:string, channelName: string, userName:string, remove: boolean){

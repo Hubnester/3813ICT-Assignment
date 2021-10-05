@@ -8,9 +8,9 @@
         <ng-container *ngFor="let group of Object.keys(authorisedChannels)">
             <tr style="padding-top:20px;">
                 <td>{{group}}</td>
-                <td *ngIf="isGroupAdmin">
-                    <input type="submit" value="Manage Users">
-                    <input type="submit" value="Delete" (click)="delete(group)">
+                <td>
+                    <input type="submit" value="Manage Users" [routerLink]="['/manageGroupUsers', group]" *ngIf="isGroupAssis[group]">
+                    <input type="submit" value="Delete" (click)="delete(group)" *ngIf="isGroupAdmin">
                 </td>
             </tr>
             <tr style="padding-top:20px;" *ngFor="let channel of authorisedChannels[group]">
@@ -19,7 +19,6 @@
                 <td>{{channel}}</td>
                 <td>
                     <input type="submit" value="Connect">
-                    <input type="submit" value="Manage Users" *ngIf="isGroupAssis[group]">
                     <input type="submit" value="Delete" (click)="delete(group, channel)" *ngIf="isGroupAdmin">
                 </td>
             </tr>
