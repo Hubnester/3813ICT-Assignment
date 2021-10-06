@@ -48,17 +48,12 @@ export class DataService {
     return await this.backendService.post("/addRemoveGroupAssis", {"groupName": groupName, "userName": userName, "remove": remove, "user": localStorage.getItem("currentUser")});
   }
 
+    // Get the users
+    async getUsers(){
+      return await this.backendService.post("/getUsers", {"user": localStorage.getItem("currentUser")});
+    }
+
   // FUNCTIONS NOT YET EDITED
-
-  // Get the role of the user
-  async getUserRole(currentUser: string){
-    return await this.backendService.post("/getUserRole", {"user" : currentUser});
-  }
-
-  // Get the users
-  async getUsers(){
-    return await this.backendService.get("/getUsers");
-  }
 
   // Update or create a new user
   async updateUser(userData: any, isNew: boolean = false){

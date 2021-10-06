@@ -29,9 +29,11 @@ module.exports = function(app, dbData, checkUserAuthorised){
                         // Create the new channel
                         collection.updateOne({"name": req.body.groupName}, [{"$set": {["channels."+req.body.channelName]: {"users" : [], "chat" : []}}}], (err, dbres) => {
                             if (err) {throw err;}
+                            client.close();
                             res.send({});
                         });
                     } else{
+                        client.close();
                         res.sendStatus(409);
                     }
                 });
@@ -42,14 +44,15 @@ module.exports = function(app, dbData, checkUserAuthorised){
                         // Create the new group
                         collection.insertOne({"name": req.body.groupName, "users": [], "channels": {}}, (err, dbres) => {
                             if (err) {throw err;}
+                            client.close();
                             res.send({});
                         });
                     } else{
+                        client.close();
                         res.sendStatus(409);
                     }
                 });
             }
-            client.close();
         });
     });
 }

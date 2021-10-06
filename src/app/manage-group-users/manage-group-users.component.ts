@@ -10,6 +10,7 @@ import { DataService } from '../services/data.service';
 export class ManageGroupUsersComponent implements OnInit {
   // To allow the html to access these functions
   Object: any = Object;
+  // The name of the group
   group: string = "";
   users: any = {};
   isGroupAdmin: boolean = false;
@@ -76,7 +77,7 @@ export class ManageGroupUsersComponent implements OnInit {
       if (otherUser != user){
         element = document.getElementById(dropdown+"Dropdown"+otherUser);
         if (element.classList.contains("show")){
-          element.classList.toggle("show");
+          element.classList.remove("show");
         }
       }
     }
@@ -103,11 +104,11 @@ export class ManageGroupUsersComponent implements OnInit {
     for (let user in this.users){
         let element: any = document.getElementById("addDropdown"+user);
         if (element.classList.contains("show")){
-          element.classList.toggle("show");
+          element.classList.remove("show");
         }
         element= document.getElementById("removeDropdown"+user);
         if (element.classList.contains("show")){
-          element.classList.toggle("show");
+          element.classList.remove("show");
         }
       }
     }
