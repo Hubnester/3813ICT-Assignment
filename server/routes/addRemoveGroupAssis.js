@@ -26,6 +26,7 @@ module.exports = function(app, dbData, checkUserAuthorised){
                         });
                     } else{
                         res.sendStatus(409);
+                        client.close();
                     }
                 });
             } else {
@@ -39,6 +40,7 @@ module.exports = function(app, dbData, checkUserAuthorised){
                         });
                     } else{
                         res.sendStatus(409);
+                        client.close();
                     }
                 });
             }

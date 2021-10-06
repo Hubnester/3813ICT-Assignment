@@ -51,8 +51,8 @@ require("./routes/getAuthorisedGroupChannelUsers")(app, dbData, checkUserAuthori
 require("./routes/addRemoveGroupChannelUser")(app, dbData, checkUserAuthorised);
 require("./routes/addRemoveGroupAssis.js")(app, dbData, checkUserAuthorised);
 require("./routes/getUsers.js")(app, dbData, checkUserAuthorised);
+require("./routes/updateUser.js")(app, dbData, checkUserAuthorised);
 
 // NOT YET UPDATED ROUTES
 
-require("./routes/updateUser.js")(app, path, serverData, saveData);
 require("./routes/deleteUser.js")(app, path, serverData, saveData);

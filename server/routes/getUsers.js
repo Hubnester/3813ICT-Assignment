@@ -10,8 +10,8 @@ module.exports = function(app, dbData, checkUserAuthorised){
         }
         let isSuperAdmin = await checkUserAuthorised("superAdmin", req.body.user);
 
-         // Connect to the DB
-         dbData.MongoClient.connect(dbData.url, async function(err, client){
+        // Connect to the DB
+        dbData.MongoClient.connect(dbData.url, async function(err, client){
             if (err) {throw err;}
             let db = client.db(dbData.name);
             let collection = db.collection("users");

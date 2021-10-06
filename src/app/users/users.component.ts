@@ -7,16 +7,14 @@ import { DataService } from '../services/data.service';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
-  users: any = [];
+  users: any[] = [];
   isGroupAdmin: boolean = false;
   isSuperAdmin: boolean = false;
-  currentUser: string | null = null;
   newUserRole: string = "none";
 
   constructor(private dataService: DataService) { }
 
   async ngOnInit(): Promise<void> {
-    this.currentUser = localStorage.getItem("currentUser");
     this.isGroupAdmin = (await this.dataService.checkUserAuthorised("groupAdmin")).authorised;
     this.isSuperAdmin = (await this.dataService.checkUserAuthorised("superAdmin")).authorised;
     this.refeshData();
@@ -24,6 +22,13 @@ export class UsersComponent implements OnInit {
 
   async refeshData(){
     this.users = await this.dataService.getUsers();
+    // Remove the current user since some of the modifications could cause issues
+    let currentUser: string | null = localStorage.getItem("currentUser");
+    for (let i in this.users){
+      if (this.users[i].name == currentUser){
+        this.users.splice(parseInt(i), 1);
+      }
+    }
   }
 
   // Display the drop down menu of the button when clicked
@@ -72,14 +77,19 @@ export class UsersComponent implements OnInit {
     // Handle the new users role being changed
     if (!user){
       this.newUserRole = role;
+      // Refresh the drop down
       let roles = ["groupAdmin", "none"];
       for (let role of roles){
         let element: any = document.getElementById("newUserSelect"+role);
         element.disabled = role == this.newUserRole;
       }
     } else {
-
-      this.refeshData();
+      this.dataService.updateUser(user, {"role": role});
+      // Refresh the user data
+      await this.refeshData();
+      await (new Promise(resolve => setTimeout(resolve, 1)));
+      // Reopen the drop down since refresing the user data closes it
+      this.toggleDropdown({"name": user, "role": role});
     }
   }
 
