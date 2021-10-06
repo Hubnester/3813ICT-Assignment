@@ -5,8 +5,6 @@ var http = require("http").Server(app);
 var bodyParser = require("body-parser");
 var path = require("path");
 
-var fs = require("fs");
-
 var cors = require("cors");
 app.use(cors());
 
@@ -24,11 +22,6 @@ let server = http.listen(3000, function(){
 	let port = server.address().port;
 	console.log("Server listening on: " + host + " port: " + port);
 });
-
-var serverData = JSON.parse(fs.readFileSync("./data.json"));
-function saveData(){
-	fs.writeFile("./data.json", JSON.stringify(serverData), err => {if (err) throw err});
-}
 
 // Sort an object based on it's keys
 sortObject = (oldObj) => {
@@ -52,7 +45,4 @@ require("./routes/addRemoveGroupChannelUser")(app, dbData, checkUserAuthorised);
 require("./routes/addRemoveGroupAssis.js")(app, dbData, checkUserAuthorised);
 require("./routes/getUsers.js")(app, dbData, checkUserAuthorised);
 require("./routes/updateUser.js")(app, dbData, checkUserAuthorised);
-
-// NOT YET UPDATED ROUTES
-
-require("./routes/deleteUser.js")(app, path, serverData, saveData);
+require("./routes/addRemoveUser.js")(app, dbData, checkUserAuthorised);

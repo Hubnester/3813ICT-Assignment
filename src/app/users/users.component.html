@@ -18,12 +18,12 @@
                         </table>
                     </div>
                 </td>
-                <td><input type="submit" value="Delete User"></td>
+                <td><input type="submit" value="Delete User" (click)="addRemoveUser(user.name)"></td>
             </ng-container>
         </tr>
         <tr style="padding-top:20px;">
-            <td><input type="text" id="newUserNameInput"></td>
-            <td><input type="text" id="newUserEmailInput"></td>
+            <td><input type="text" [(ngModel)]=newUserData.name></td>
+            <td><input type="text" [(ngModel)]=newUserData.email></td>
             <td *ngIf=isSuperAdmin>
                 <input type="submit" value="Set Role \/" (click)="toggleDropdown()">
                 <div class="dropdown-content" id="newUserRoleDropdown">
@@ -33,7 +33,7 @@
                     </table>
                 </div>
             </td>
-            <td><input type="submit" value="Add User"></td>
+            <td><input type="submit" value="Add User" (click)="addRemoveUser()"></td>
         </tr>
     </table>
 </div>

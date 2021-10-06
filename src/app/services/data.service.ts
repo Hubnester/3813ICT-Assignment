@@ -54,14 +54,12 @@ export class DataService {
   }
 
   // Update a user
-  async updateUser(user: string, updateData: any){
-    return await this.backendService.post("/updateUser", {"userName": user, "updateData": updateData, "user": localStorage.getItem("currentUser")});
+  async updateUser(userName: string, updateData: any){
+    return await this.backendService.post("/updateUser", {"userName": userName, "updateData": updateData, "user": localStorage.getItem("currentUser")});
   }
 
-  // FUNCTIONS NOT YET EDITED
-
-  // Update or create a new user
-  async deleteUser(userName: string){
-    return await this.backendService.post("/deleteUser", {"user": userName});
+  // Add or remove a user
+  async addRemoveUser(userData: any, remove: boolean){
+    return await this.backendService.post("/addRemoveUser", {"userData": userData, "remove": remove, "user": localStorage.getItem("currentUser")});
   }
 }

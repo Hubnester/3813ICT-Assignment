@@ -10,7 +10,11 @@ export class UsersComponent implements OnInit {
   users: any[] = [];
   isGroupAdmin: boolean = false;
   isSuperAdmin: boolean = false;
-  newUserRole: string = "none";
+  newUserData: any = {
+    "name": "",
+    "email": "",
+    "role": "none"
+  }
 
   constructor(private dataService: DataService) { }
 
@@ -46,7 +50,7 @@ export class UsersComponent implements OnInit {
       let roles = ["groupAdmin", "none"];
       for (let role of roles){
         element = document.getElementById("newUserSelect"+role);
-        element.disabled = role == this.newUserRole;
+        element.disabled = role == this.newUserData.role;
       }
       element = document.getElementById("newUserRoleDropdown");
       // To fix errors later
@@ -76,12 +80,12 @@ export class UsersComponent implements OnInit {
   async updateRole(role: string, user: string | null = null){
     // Handle the new users role being changed
     if (!user){
-      this.newUserRole = role;
+      this.newUserData.role = role;
       // Refresh the drop down
       let roles = ["groupAdmin", "none"];
       for (let role of roles){
         let element: any = document.getElementById("newUserSelect"+role);
-        element.disabled = role == this.newUserRole;
+        element.disabled = role == this.newUserData.role;
       }
     } else {
       this.dataService.updateUser(user, {"role": role});
@@ -91,6 +95,26 @@ export class UsersComponent implements OnInit {
       // Reopen the drop down since refresing the user data closes it
       this.toggleDropdown({"name": user, "role": role});
     }
+  }
+
+  // Add or remove a user
+  async addRemoveUser(user: string | null = null){
+    if (user){
+      // Delete the user if it's supplied
+      await this.dataService.addRemoveUser({"name": user}, true);
+    } else{
+      if (this.newUserData.name && this.newUserData.email){
+        let retVal: any = await this.dataService.addRemoveUser(this.newUserData, false);
+        if (retVal.success){
+          this.newUserData = {
+            "name": "",
+            "email": "",
+            "role": "none"
+          }
+        }
+      }
+    }
+    this.refeshData();
   }
 
   // Check for mouse clicks
