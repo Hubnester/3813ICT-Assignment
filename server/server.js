@@ -35,6 +35,7 @@ sortObject = (oldObj) => {
 }
 
 var checkUserAuthorised = require("./routes/checkUserAuthorised.js")(app, dbData);
+var placeholderProfilePic = require("./placeholderProfilePic");
 
 require("./routes/login.js")(app, dbData);
 require("./routes/getAuthorisedGroupChannels.js")(app, dbData, checkUserAuthorised, sortObject);
@@ -45,4 +46,5 @@ require("./routes/addRemoveGroupChannelUser")(app, dbData, checkUserAuthorised);
 require("./routes/addRemoveGroupAssis.js")(app, dbData, checkUserAuthorised);
 require("./routes/getUsers.js")(app, dbData, checkUserAuthorised);
 require("./routes/updateUser.js")(app, dbData, checkUserAuthorised);
-require("./routes/addRemoveUser.js")(app, dbData, checkUserAuthorised);
+require("./routes/addRemoveUser.js")(app, dbData, checkUserAuthorised, placeholderProfilePic);
+require("./routes/getUserData.js")(app, dbData, checkUserAuthorised);

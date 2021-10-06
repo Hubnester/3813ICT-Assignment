@@ -1,4 +1,4 @@
-module.exports = function(app, dbData, checkUserAuthorised){
+module.exports = function(app, dbData, checkUserAuthorised, placeholderProfilePic){
     app.post("/addRemoveUser", async function(req, res){
         if (!req.body || !req.body.user || !req.body.userData || !req.body.userData.name){
             return res.sendStatus(400);
@@ -38,7 +38,8 @@ module.exports = function(app, dbData, checkUserAuthorised){
                 let newUser = req.body.userData;
                 newUser.password = newUser.password || "";
                 newUser.groupAssisFor = newUser.password || [];
-                newUser.profilePic = newUser.profilePic || "";
+                // Probs a better way to do this, but i have too many other assignments to bother trying
+                newUser.profilePic = newUser.profilePic || placeholderProfilePic;
                 // Add the user
                 collection.find({"name": req.body.userData.name}).count((err, count) => {
                     if (count == 0){

@@ -62,4 +62,9 @@ export class DataService {
   async addRemoveUser(userData: any, remove: boolean){
     return await this.backendService.post("/addRemoveUser", {"userData": userData, "remove": remove, "user": localStorage.getItem("currentUser")});
   }
+
+  // Get the data for the current user
+  async getUserData(){
+    return await this.backendService.post("/getUserData", {"user": localStorage.getItem("currentUser")});
+  }
 }
