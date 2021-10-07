@@ -18,7 +18,7 @@
                 <td></td>
                 <td>{{channel}}</td>
                 <td>
-                    <input type="submit" value="Connect">
+                    <input type="submit" value="Connect" (click)="connectToChannel(group, channel)">
                     <input type="submit" value="Delete" (click)="delete(group, channel)" *ngIf="isGroupAdmin">
                 </td>
             </tr>

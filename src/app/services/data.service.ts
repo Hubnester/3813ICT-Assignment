@@ -67,4 +67,14 @@ export class DataService {
   async getUserData(){
     return await this.backendService.post("/getUserData", {"user": localStorage.getItem("currentUser")});
   }
+
+  // Get chat for the specified channel
+  async getChat(group: string, channel: string){
+    return await this.backendService.post("/getChat", {"groupName": group, "channelName": channel, "user": localStorage.getItem("currentUser")});
+  }
+
+  // Get the profile pictures of all the users
+  async getProfilePics(){
+    return await this.backendService.post("/getProfilePics", {});
+  }
 }

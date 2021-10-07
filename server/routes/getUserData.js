@@ -1,4 +1,4 @@
-module.exports = function(app, dbData, checkUserAuthorised){
+module.exports = function(app, dbData){
     app.post("/getUserData", async function(req, res){
         if (!req.body || !req.body.user ){
             return res.sendStatus(400);

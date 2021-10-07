@@ -10,6 +10,7 @@ import { UsersComponent } from './users/users.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GroupsComponent } from './groups/groups.component';
 import { ManageGroupUsersComponent } from './manage-group-users/manage-group-users.component';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ManageGroupUsersComponent } from './manage-group-users/manage-group-use
     UsersComponent,
     ProfileComponent,
     GroupsComponent,
-    ManageGroupUsersComponent
+    ManageGroupUsersComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,

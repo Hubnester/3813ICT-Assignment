@@ -62,4 +62,9 @@ export class GroupsComponent implements OnInit {
     // Reset the channel list
     this.authorisedChannels = await this.dataService.getAuthorisedGroupChannels();
   }
+
+  // Connect to the specified channel
+  connectToChannel(group: string, channel: string){
+    this.router.navigateByUrl("/chat/"+group+"/"+channel);
+  }
 }

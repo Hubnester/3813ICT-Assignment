@@ -27,7 +27,6 @@ export class ProfileComponent implements OnInit {
       fileReader.readAsDataURL(event.target.files[0]);
       fileReader.onload = () => {
         // Check if the file is an image
-        console.log("fileInputText")
         if (fileReader.result?.toString().includes("data:image")){
           this.userData.profilePic = fileReader.result;
           this.invalidFileWarning = "";

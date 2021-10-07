@@ -1,0 +1,5 @@
+.scrollArea {
+    height: 750px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
