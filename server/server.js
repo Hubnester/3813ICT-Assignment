@@ -32,6 +32,8 @@ let server = http.listen(3000, function(){
 	let port = server.address().port;
 	console.log("Server listening on: " + host + " port: " + port);
 });
+// For testing the server
+module.exports = server;
 
 // Sort an object based on it's keys
 sortObject = (oldObj) => {

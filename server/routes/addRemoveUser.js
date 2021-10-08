@@ -37,7 +37,7 @@ module.exports = function(app, dbData, checkUserAuthorised, placeholderProfilePi
                 // Create the data for the new user
                 let newUser = req.body.userData;
                 newUser.password = newUser.password || "";
-                newUser.groupAssisFor = newUser.password || [];
+                newUser.groupAssisFor = newUser.groupAssisFor || [];
                 // Probs a better way to do this, but i have too many other assignments to bother trying
                 newUser.profilePic = newUser.profilePic || placeholderProfilePic;
                 // Add the user
