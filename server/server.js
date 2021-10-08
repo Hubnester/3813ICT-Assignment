@@ -49,6 +49,24 @@ var userRoomConnections = {};
 var checkUserAuthorised = require("./routes/checkUserAuthorised.js")(app, dbData);
 var placeholderProfilePic = require("./placeholderProfilePic");
 
+// Add the super user if it doesn't exist
+dbData.MongoClient.connect(dbData.url, async function(err, client){
+	if (err) {throw err;}
+	let db = client.db(dbData.name);
+	let collection = db.collection("users");
+	// Check if a user with the supplied name and password exists
+	collection.find({"name": "super"}).count((err, count) => {
+		if (count == 0){
+			collection.insertOne({"email":"super@com.au","role":"superAdmin","name":"super","groupAssisFor":[],"password":"","profilePic":placeholderProfilePic}, (err, dbres) => {
+				if (err) {throw err;}
+				client.close();
+			});
+		} else {
+			client.close();
+		}
+	});
+});
+
 require("./routes/login.js")(app, dbData);
 require("./routes/getAuthorisedGroupChannels.js")(app, dbData, checkUserAuthorised, sortObject);
 require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised);

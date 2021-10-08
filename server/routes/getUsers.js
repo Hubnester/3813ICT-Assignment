@@ -24,7 +24,7 @@ module.exports = function(app, dbData, checkUserAuthorised){
                     let user = {};
                     user.name = dbUser.name;
                     user.email = dbUser.email;
-                    // Add the role only if the requesting user is a super amin sicne only they can change roles
+                    // Add the role only if the requesting user is a super admin since only they can change roles
                     if (isSuperAdmin){
                         user.role = dbUser.role;
                     }
