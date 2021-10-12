@@ -10,8 +10,7 @@ module.exports = function(app, dbData, checkUserAuthorised){
             return res.sendStatus(401);
         }
 
-        let dbDone = undefined;
-
+        // Connect to the DB
         dbData.MongoClient.connect(dbData.url, async function(err, client){
             if (err) {throw err;}
             let db = client.db(dbData.name);

@@ -70,7 +70,7 @@ dbData.MongoClient.connect(dbData.url, async function(err, client){
 });
 
 require("./routes/login.js")(app, dbData);
-require("./routes/getAuthorisedGroupChannels.js")(app, dbData, checkUserAuthorised, sortObject);
+require("./routes/getAuthorisedChannels.js")(app, dbData, checkUserAuthorised, sortObject);
 require("./routes/deleteGroupChannel.js")(app, dbData, checkUserAuthorised);
 require("./routes/createGroupChannel.js")(app, dbData, checkUserAuthorised);
 require("./routes/getAuthorisedGroupChannelUsers")(app, dbData, checkUserAuthorised, sortObject);
